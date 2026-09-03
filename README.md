@@ -1,2 +1,2 @@
-# py-maver
+# py-mave
 a python-based trading software
