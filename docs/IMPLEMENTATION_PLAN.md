@@ -3,11 +3,16 @@
 Status: initial plan, 2026-09-03. Implemented scope is the connection probe.
 Remaining increments depend on evidence and the owner's unresolved decisions.
 
-The owner has now selected **XAUUSD / M1** as the starting market/timeframe and
-requires evidence before replacing it. The recalled 4%/4% success targets and
-4% daily/12% total drawdown limits are documented as a
-[candidate scenario](DEMO_SCENARIO.md). Exact formulas, phase resets, bonuses and
-the provider's source remain unknown. No loss-rule engine is implemented yet.
+The owner wants autonomous Python trading, starting with **XAUUSD / M1** and
+evidence before changing that choice. Use the 4%/4% targets and 4% daily/12% total
+loss limits as a [rough simulation model](DEMO_SCENARIO.md). FeneFX is excluded as
+a funding candidate; its website does not define project requirements.
+
+The owner has no existing strategy. Researching and testing about 5–7 candidates
+is part of this project, with deep internet research authorized when strategy
+selection is the focus. The [strategy research plan](STRATEGY_RESEARCH_PLAN.md)
+sets the comparison approach. No strategy, order support or loss-rule engine is
+implemented yet.
 
 ## First increment: establish identifiable, read-only demo access
 
@@ -89,9 +94,9 @@ not a completed dependency security review or approval for a deployed trading se
 | Order | Small deliverable | Exit evidence and why it matters |
 | --- | --- | --- |
 | 1 — complete | View-only demo consent and account read | Exact account, currency, balance and symbol list confirmed against the API |
-| Alongside 1 | Owner supplies economic baseline, target rulebook and candidate strategy | Determines whether the next development work belongs on a feasible cash path |
+| Alongside data preparation | Research candidate strategies; record economic baseline when needed for spending decisions | The project supplies strategy candidates; the owner need not arrive with one |
 | 2 | Verify XAUUSD metadata and M1 availability, then capture a short read-only sample | Candle/quote timestamps, bid/ask, spread and costs; establishes usable inputs for the chosen market/timeframe |
-| 3 | One explicit strategy experiment with realistic costs and target account constraints | Documented decision rules and falsifiable acceptance criteria; abandon or revise if evidence is weak |
+| 3 | Compare 5–7 simple strategies under common costs and rough account rules, then test useful layers | Reproducible rules, all trials recorded, independent evaluation and explicit failure evidence; no forced winner |
 | 4 | Bounded demo execution and recovery, only after its exposure limits are set | Size/price rounding, server acknowledgement, fills/rejections, partial execution, restart reconciliation and STOP behavior |
 | 5 | Decide whether a paid/live/prop attempt is justified | Current strategy evidence, firm eligibility, payout route, spending cap and survivable failure state |
 | 6 | Measure cash realization and repeatability | Receipts reconciled against attempts, fees, operating costs and obligations; sufficient remaining reserve |
@@ -115,25 +120,28 @@ A dashboard, distributed services, deployment automation or general strategy eng
 has no current completion requirement. Manual rule verification and cash accounting
 can serve the first experiments.
 
-The candidate account percentages do not define per-trade risk, position size,
-strategy, personal spending authorization or payment amounts. Those decisions
-require the owner's inputs or measured experiment results. M1 remains the starting
-timeframe; no alternative has yet earned a change through comparative evidence.
+The account percentages do not define per-trade risk, position size, strategy,
+personal spending authorization or payment amounts. Research and experiments will
+define candidate trading rules and simulation sizing; personal spending decisions
+remain the owner's. M1 remains the starting timeframe, with evidence required for
+a change.
 
 ## Questions that change the next step
 
-1. Is a firm name or source link available for the recalled scenario? What are its
-   daily/total drawdown formulas, phase/reset rules and actual payment terms?
+1. Can the available XAUUSD data and cost information support a fair comparison?
+   Verify this directly; define strategy candidates through research, not by asking
+   the owner to provide an existing strategy.
 2. What is the first cash-received target, the operating cost/runway baseline, and
    the maximum total cash loss/spend authorized? What debt/attempt/STOP limits apply?
-3. What entry, exit and sizing rules should the first XAUUSD/M1 strategy test, and
-   what evidence exists? The instrument/timeframe preference is now established.
-4. For the eventual account path, what eligibility and payout destination must be
-   satisfied, and what counts as cash under operational control?
+3. Which 5–7 distinct rules merit testing, and what evidence would justify keeping
+   or rejecting them? Resolve this through the research and comparison work.
+4. For an eventual funding account, which provider permits the intended automation,
+   accepts the owner and offers suitable rules and a usable payout route? What
+   counts as cash under operational control? FeneFX is not a current candidate.
 
-The first read-only connection proof is complete. These gaps determine the next
-useful experiment and prevent treating the prop simulation as realistic or the
-economic exposure as authorized.
+The first read-only connection proof is complete. Research and rough simulation
+can proceed without a chosen funding provider or an owner-supplied strategy.
+Real-provider accuracy and economic exposure require their own evidence and inputs.
 
 ## Sources
 
