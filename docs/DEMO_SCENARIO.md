@@ -1,13 +1,20 @@
-# Candidate demo scenario: XAUUSD / M1
+# Rough demo scenario: autonomous XAUUSD / M1
 
 Updated from the owner's message on 2026-09-03.
+
+The owner's instructions define project requirements. The canonical specification
+describes the economic problem; website claims are reference information. FeneFX
+is excluded as a funding candidate, and its rules are not adopted for this project.
 
 ## Starting market
 
 The owner selected XAUUSD on M1 (one-minute candles). Start the investigation there.
 An alternative instrument or timeframe needs evidence before replacing this choice.
-This is a market/timeframe preference; entry, exit and position-sizing rules are
-still unspecified.
+The owner has no existing strategy. The project will research and test about 5–7
+candidates, with layers tested as measurable additions. See the
+[strategy research plan](STRATEGY_RESEARCH_PLAN.md). The intended system makes and
+places trades automatically; its entry, exit and sizing rules still need research
+and testing. Supplying a strategy is not a prerequisite placed on the owner.
 
 Evidence for changing the choice should compare realistic trading costs, results
 on data not used to tune the strategy, stability across tested periods, loss-limit
@@ -15,11 +22,10 @@ breaches and progress toward the economic objective. A better-looking single tes
 or a general opinion about timeframes is insufficient. No alternative has yet been
 shown to be better.
 
-## Rules recalled by the owner
+## Rough account rules
 
-The owner remembers seeing the following scenario once on another broker's website,
-not FIBO's. The firm and source URL are unknown. Record it as a candidate test
-scenario; it is not a verified current offer or an adopted executable rulebook.
+The owner recalled these figures from another firm's website and asked to use
+them roughly. They are an approximate test model, not FIBO's or FeneFX's terms.
 
 | Event | Recalled condition | Recalled consequence |
 | --- | --- | --- |
@@ -28,47 +34,47 @@ scenario; it is not a verified current offer or an adopted executable rulebook.
 | Failure condition 1 | Daily drawdown reaches 4% | Prop account is taken away |
 | Failure condition 2 | Total drawdown reaches 12% | Prop account is taken away |
 
-For scale only, 4% of USD 3,000 is USD 120, and 12% is USD 360. These calculations
-do not establish the actual target or failure balances. The base used for each
-percentage, reset behavior and drawdown definitions are not known.
+TP1 and TP2 are treated as account-level targets. They do not specify an individual
+trade's take-profit price, stop, position size or acceptable risk.
 
-Interpretation to confirm: TP1 and TP2 describe account-level success milestones.
-Their names alone do not define an individual trade's take-profit price or stop.
-The 4% daily account limit also does not specify how much to risk on one trade.
+## Provisional simulation defaults
 
-## Gaps that change the simulation
+These calculation choices were proposed in this conversation to make the rough
+model testable. They are adjustable assumptions, not additional owner requirements,
+provider terms or implemented controls.
 
-- Source: firm name, offer URL, date/version and whether the offer is still available.
-- Success: are these separate phases or milestones in one account? Does balance
-  reset between them? What is the reference balance for each 4% target? Are open
-  profits counted or must trades be closed?
-- Daily loss: starting balance, start-of-day balance/equity, intraday peak or another
-  reference? Do open-position losses, fees and swaps count? Which timezone and time
-  reset the day?
-- Total loss: a fixed floor based on initial balance, a floor that rises with gains,
-  or another calculation? Does equity or closed-trade balance trigger failure?
-- Passing and payment: what is the bonus, when is it payable, can it be withdrawn,
-  and what fees, splits, other rules and eligibility conditions apply?
+| Item | Working definition |
+| --- | --- |
+| Starting amount | USD 3,000 of virtual capital |
+| Stages | Two separate stages, each starting at USD 3,000 in the simulation |
+| Pass a stage | Closed-trade balance reaches at least USD 3,120, with no open positions or pending orders and no prior failure |
+| Daily loss | Fail when equity reaches or falls below 96% of the day's opening balance; first-day floor USD 2,880 |
+| Total loss | Fail when equity reaches or falls below USD 2,640; fixed within each stage |
+| Day boundary | 00:00 UTC for repeatable tests |
+| Open trades and costs | Equity includes open profit/loss; commissions, swaps and modeled execution costs count |
+| Failure | End the simulated attempt; a simultaneous profit target does not override failure |
+| Rewards | Record stage completion; assign no cash bonus or payout value |
 
-The owner reports failure when a limit is *reached*. That wording is preserved;
-exact boundary behavior still needs a real rulebook or an explicitly agreed
-simulation definition.
+A simulated stage reset does not change the broker demo account. The first day's
+loss allowance is USD 120; later daily allowances depend on the opening balance.
+The total loss allowance is USD 360 per stage. A future provider's precise account,
+automation and payout terms must be checked when considering that provider.
 
-If failure is based on floating equity at any moment, checking only minute closes
-cannot prove the loss limit was respected between those closes. The data and test
-method must match the final rule definition.
+Checking only minute closes cannot prove that equity stayed within these limits
+between closes. M1 is the strategy timeframe; finer observations or conservative
+bounds are needed for loss-limit evidence. Report gaps in that evidence explicitly.
 
-The actual FIBO demo is the data/connection test account. No evidence currently
-establishes that it enforces the recalled provider's rules. The current Python
-implementation does not enforce this candidate scenario.
+The actual FIBO demo is the data/connection test account. No evidence establishes
+that it enforces this rough model. The current Python code supports read-only
+connection/account probes; it does not enforce this model or place orders.
 
 ## Next useful work
 
 1. Verify the broker's XAUUSD symbol details and M1 data availability; plan a small
    read-only sample of candles, bid/ask quotes and relevant trading costs.
-2. Identify the recalled offer if the owner can supply a name or link. Otherwise,
-   agree on explicit hypothetical formulas before implementing a simulator.
-3. Define the first strategy's buy/sell, exit and sizing rules before testing an edge.
+2. Research 5–7 candidate strategies and define reproducible buy/sell, exit and
+   sizing rules under the strategy research plan.
+3. Compare them after costs under this rough account model; test layers separately.
 
 No success bonus is counted as received cash. Personal spending/loss authorization,
 cash-flow targets and real-account decisions remain separate unresolved inputs.

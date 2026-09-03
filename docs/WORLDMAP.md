@@ -1,8 +1,8 @@
 # Mynyra worldmap
 
-Status: updated understanding, 2026-09-03. The owner selected XAUUSD/M1 and supplied
-a recalled candidate account scenario. Personal financial limits, exact account
-rule definitions and payout terms remain open.
+Status: updated understanding, 2026-09-03. The owner wants autonomous Python trading
+on XAUUSD/M1 and has no existing strategy. Researching and comparing 5–7 candidates
+is part of this project. Personal financial limits and a real payout path remain open.
 
 This map interprets the supplied
 [canonical problem specification](03-Mynyra_Real_Problem_Specification_CANONICAL.md).
@@ -40,7 +40,9 @@ account rule is not permanent evidence.
 
 The software path starts with secure connectivity, application authentication and
 verified demo account reads. It can then support data observation, strategy tests,
-bounded demo execution and recovery.
+bounded demo execution and recovery. Strategy research and testing belong to this
+path; supplying a strategy is not a prerequisite placed on the owner. The target
+system makes and executes decisions automatically.
 
 The economic path needs a viable strategy, suitable account access, compatible
 rules, execution after costs, payout-eligible profit, withdrawal, cash received,
@@ -93,12 +95,19 @@ actions when they improve the economic trajectory.
 The chosen starting market is **XAUUSD on M1**. Changing it requires evidence.
 The owner also recalled two 4% success targets, a 4% daily drawdown failure limit
 and a 12% total drawdown failure limit, with loss of the prop account on failure.
-Bonuses are TBD. The source was another, currently unnamed broker. See the
-[candidate demo scenario](DEMO_SCENARIO.md) for the exact report and unresolved
-definitions. These figures are not personal cash-risk authorization.
+Bonuses are TBD. The owner asked to use these numbers roughly and excluded FeneFX
+as a funding candidate. Its website is reference material, not project authority.
+See the [rough demo scenario](DEMO_SCENARIO.md) for clearly labeled simulation
+assumptions. These figures are not personal cash-risk authorization.
 
-A demo account of the desired size provides a useful technical test bed. A prop
-simulation additionally needs the target firm's actual loss rules, drawdown method,
+The owner has no strategy and wants about 5–7 candidates or layers tested. The
+[research plan](STRATEGY_RESEARCH_PLAN.md) starts with distinct simple candidates,
+then measures additions separately. Deep internet research is authorized when
+strategy selection becomes the focus. Sources inform hypotheses; local testing
+must establish whether they help this project.
+
+A demo account of the desired size provides a useful technical test bed. Predicting
+results at a particular provider also needs its actual loss rules, drawdown method,
 reset timezone, profit target, costs, leverage, trading restrictions, attempt fees,
 profit split and payout conditions. Matching balance alone does not establish
 equivalence.
@@ -114,8 +123,8 @@ separate measurements.
 | Milestone | Completion evidence | Missing decisions |
 | --- | --- | --- |
 | Technical access — complete for the first read | Secure demo connection, app/account authentication and correct account snapshot | Continuous data capture/recovery are later proofs |
-| Useful experiment | One explicit strategy on XAUUSD/M1 tested against relevant data and realistic costs; evidence required for a different market/timeframe | Entry/exit/sizing rules and existing strategy evidence |
-| Account realism | Written prop constraints plus an eligible, feasible cash receipt route | Source and exact formulas for the recalled 4%/4% targets and 4%/12% loss limits; payment terms |
+| Useful experiment | A fair comparison of 5–7 defined strategies on XAUUSD/M1 after costs; layers evaluated separately | Research, data/cost verification and independent evaluation; no existing owner strategy is required |
+| Account realism | Written prop constraints plus an eligible, feasible cash receipt route | Rough simulation can start now; eventual provider automation, account and payout terms remain to be verified |
 | Authorized economic attempt | Strategy/operational evidence and a bounded, survivable cash exposure | Budget, debt boundaries, attempts, loss limits and STOP rules |
 | First cash realization | Net cash actually received, reconciled with fees and obligations | Target amount, measurement window and recurring costs |
 | Repeatability | Multiple receipts and a remaining reserve sufficient for defined ordinary failures | Required duration, reserve size and what failures must be survivable |
