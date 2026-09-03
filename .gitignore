@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Mynyra private credentials, account observations, and run output
+.local/
+.env.*
+!.env.example
+credentials*.json
