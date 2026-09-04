@@ -87,6 +87,10 @@ actions when they improve the economic trajectory.
   the cTrader destination used `utun4`. Local proxy port 1081 refused connections.
   Working routing must be rechecked if VPN mode or network state changes.
 - Personal identifiers and actual credentials are kept in ignored local state.
+- The historical-data gate now passes for conservative screening: all 3,552,511
+  Faraz rows were normalized from confirmed Tehran time to UTC and independently
+  validated, and a one-hour FIBO run supplied 3,285 checked bid/ask samples. The
+  [data readiness report](DATA_READINESS_REPORT.md) preserves the limits of that proof.
 - No strategy, instrument, risk percentage or operating architecture is imported
   from a different trading project or inferred from the existing app description.
 
@@ -123,7 +127,7 @@ separate measurements.
 | Milestone | Completion evidence | Missing decisions |
 | --- | --- | --- |
 | Technical access — complete for the first read | Secure demo connection, app/account authentication and correct account snapshot | Continuous data capture/recovery are later proofs |
-| Useful experiment | A fair comparison of 5–7 defined strategies on XAUUSD/M1 after costs; layers evaluated separately | Research, data/cost verification and independent evaluation; no existing owner strategy is required |
+| Useful experiment | A fair comparison of 5–7 defined strategies on XAUUSD/M1 after costs; layers evaluated separately | Data/cost preparation is complete for screening; candidate research, fixed time splits and independent evaluation remain |
 | Account realism | Written prop constraints plus an eligible, feasible cash receipt route | Rough simulation can start now; eventual provider automation, account and payout terms remain to be verified |
 | Authorized economic attempt | Strategy/operational evidence and a bounded, survivable cash exposure | Budget, debt boundaries, attempts, loss limits and STOP rules |
 | First cash realization | Net cash actually received, reconciled with fees and obligations | Target amount, measurement window and recurring costs |
