@@ -34,6 +34,12 @@ account snapshots and other private run output under `.local/`. That directory i
 intentionally ignored and must never be committed. ASUS needs its own private
 setup; do not copy credentials through GitHub.
 
+## ASUS environment
+
+The reproducible Python 3.11.14 installation, private-state audit, cTrader token
+decision, v2rayN route, validation evidence and rollback procedure are recorded in
+the [ASUS environment report](ASUS_ENVIRONMENT.md).
+
 ## Before the next implementation task
 
 Run the documented tests and data validation. Confirm the working tree is clean,

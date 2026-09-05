@@ -59,3 +59,18 @@ Remaining proof gaps:
 The [data readiness report](DATA_READINESS_REPORT.md) permits conservative
 historical candidate screening while keeping those gaps as hard limits on later
 claims.
+
+## ASUS parity verification — 2026-09-05
+
+The [ASUS environment report](ASUS_ENVIRONMENT.md) records the full platform,
+installation, private-state, authorization, network, rollback and parity evidence.
+On Ubuntu 24.04.4/amd64, the project-local Python 3.11.14 environment passed the
+same 31 tests, `pip check`, project/test compilation, the full 81-series and
+3,552,511-row Faraz validation, and a create-only re-summary of all 3,285 one-hour
+XAUUSD quotes. The capture SHA-256, median spread and p95 spread matched the prior
+evidence exactly.
+
+The ASUS cTrader TLS check passed with TLS 1.3 through the v2rayN `singbox_tun`
+system route. The transferred token passed the bounded application and single-demo-
+account read sequence with `accounts` scope and 60 symbols. No token was created or
+refreshed, no trading scope was selected, and no order path was called or changed.
