@@ -1,7 +1,11 @@
 # Python implementation plan
 
-Status: initial plan, 2026-09-03. Implemented scope is the connection probe.
-Remaining increments depend on evidence and the owner's unresolved decisions.
+Status: updated 2026-09-04. Implemented scope is the connection probe, bounded
+XAUUSD/M1 capture, Faraz archive audit and UTC normalization, fixed-interval FIBO
+quote recorder, and reproducible quote summary. The
+[data readiness gate](DATA_READINESS_REPORT.md) now passes for conservative
+historical screening. Remaining increments depend on new evidence and the owner's
+unresolved economic decisions.
 
 The owner wants autonomous Python trading, starting with **XAUUSD / M1** and
 evidence before changing that choice. Use the 4%/4% targets and 4% daily/12% total
@@ -45,6 +49,8 @@ Current modules:
 | `config.py` | Credential input and safe validation messages |
 | `network.py` | Fixed demo endpoint and credential-free TLS check |
 | `ctrader.py` | SDK, transport, authentication order, account identity and protocol conversion |
+| `market.py` | Exact price-bar conversion, owner-only capture persistence and quote validation/statistics |
+| `datasets.py` | Safe ZIP audit, Tehran-to-UTC normalization and full output validation |
 | `cli.py` | Operator commands, bounded lifecycle, filtered output and exit codes |
 
 The current probe has a 45-second overall deadline, 10-second request deadlines,
@@ -94,8 +100,7 @@ not a completed dependency security review or approval for a deployed trading se
 | Order | Small deliverable | Exit evidence and why it matters |
 | --- | --- | --- |
 | 1 — complete | View-only demo consent and account read | Exact account, currency, balance and symbol list confirmed against the API |
-| Alongside data preparation | Research candidate strategies; record economic baseline when needed for spending decisions | The project supplies strategy candidates; the owner need not arrive with one |
-| 2 | Verify XAUUSD metadata and M1 availability, then capture a short read-only sample | Candle/quote timestamps, bid/ask, spread and costs; establishes usable inputs for the chosen market/timeframe |
+| 2 — data gate complete | Verify XAUUSD metadata and M1 availability; normalize supplied history; record and summarize FIBO bid/ask | 3.55 million rows normalized and independently validated; 1,000 FIBO bars and 3,285 one-hour quote samples captured; limits are explicit |
 | 3 | Compare 5–7 simple strategies under common costs and rough account rules, then test useful layers | Reproducible rules, all trials recorded, independent evaluation and explicit failure evidence; no forced winner |
 | 4 | Bounded demo execution and recovery, only after its exposure limits are set | Size/price rounding, server acknowledgement, fills/rejections, partial execution, restart reconciliation and STOP behavior |
 | 5 | Decide whether a paid/live/prop attempt is justified | Current strategy evidence, firm eligibility, payout route, spending cap and survivable failure state |
@@ -128,9 +133,8 @@ a change.
 
 ## Questions that change the next step
 
-1. Can the available XAUUSD data and cost information support a fair comparison?
-   Verify this directly; define strategy candidates through research, not by asking
-   the owner to provide an existing strategy.
+1. Which chronological development, selection and sealed evaluation boundaries
+   give the 100,000-row XAUUSD M1 sample a fair comparison without leakage?
 2. What is the first cash-received target, the operating cost/runway baseline, and
    the maximum total cash loss/spend authorized? What debt/attempt/STOP limits apply?
 3. Which 5–7 distinct rules merit testing, and what evidence would justify keeping
@@ -139,9 +143,10 @@ a change.
    accepts the owner and offers suitable rules and a usable payout route? What
    counts as cash under operational control? FeneFX is not a current candidate.
 
-The first read-only connection proof is complete. Research and rough simulation
-can proceed without a chosen funding provider or an owner-supplied strategy.
-Real-provider accuracy and economic exposure require their own evidence and inputs.
+The read-only connection and historical-data gates are complete. Candidate
+research can now begin without a chosen funding provider or an owner-supplied
+strategy. Historical screening must follow the readiness report's constraints;
+real-provider accuracy and economic exposure require their own evidence and inputs.
 
 ## Sources
 

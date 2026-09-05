@@ -66,12 +66,13 @@ bounds are needed for loss-limit evidence. Report gaps in that evidence explicit
 
 The actual FIBO demo is the data/connection test account. No evidence establishes
 that it enforces this rough model. The current Python code supports read-only
-connection/account probes; it does not enforce this model or place orders.
+connection/account probes, historical-data normalization and quote recording; it
+does not enforce this model or place orders.
 
 ## Next useful work
 
-1. Verify the broker's XAUUSD symbol details and M1 data availability; plan a small
-   read-only sample of candles, bid/ask quotes and relevant trading costs.
+1. Use the completed [data readiness report](DATA_READINESS_REPORT.md) as the
+   evidence and limits for historical testing.
 2. Research 5–7 candidate strategies and define reproducible buy/sell, exit and
    sizing rules under the strategy research plan.
 3. Compare them after costs under this rough account model; test layers separately.
