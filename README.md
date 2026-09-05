@@ -30,12 +30,20 @@ command or live endpoint option.
 
 The initial supported/tested runtime is Python 3.11; `.python-version` records
 3.11.14. Use a Python 3.11 interpreter explicitly when creating the environment.
+On the diagnosed ASUS Ubuntu 24.04/amd64 machine, build the isolated interpreter
+with the repository installer first:
 
 ```sh
-python3.11 -m venv .venv
+bash scripts/install-python311.sh
+.local/runtime/python-3.11.14/bin/python3.11 -m venv .venv
 .venv/bin/python -m pip install -r requirements.lock -e .
 .venv/bin/mynyra network-check
 ```
+
+The [ASUS environment report](docs/ASUS_ENVIRONMENT.md) records the design choice,
+source verification, exact native versions, token lifecycle findings, v2rayN route
+and removal/recovery procedure. Other machines may use an already trusted
+`python3.11`, but must still verify version 3.11.14 before claiming parity.
 
 `requirements.lock` records the resolved versions from the first environment.
 It is a version snapshot, not a cross-platform or hash-verified lock.
@@ -157,15 +165,23 @@ manifest and rereads every output before reporting success. See the
 [data readiness report](docs/DATA_READINESS_REPORT.md) for the verified scope and
 limits. Historical candles do not replace FIBO bid/ask costs or forward evidence.
 
-## VPN routing on the initial Mac
+## VPN routing
 
-V2BOX was observed connected as a macOS system VPN. The cTrader demo destination
-resolved onto interface `utun4`, and the real account check succeeded on that route.
+On ASUS, the v2rayN system-tunnel configuration supplied a route named
+`singbox_tun`; the cTrader destination routed through it and the
+certificate-verified TLS check passed. A local listener at `127.0.0.1:10808`
+accepted both SOCKS5 and HTTP CONNECT probes, but the SDK's raw TLS connection
+follows the OS tunnel and does not explicitly use that proxy port. Recheck both
+route and listener after a v2rayN mode change.
+
+On the initial Mac, V2BOX was observed connected as a macOS system VPN. The
+cTrader demo destination resolved onto interface `utun4`, and the real account
+check succeeded on that route.
 The user's suggested `127.0.0.1:1081` proxy refused connections at the time of the
 retry; no listener was found. System HTTP/HTTPS/SOCKS proxy switches were disabled.
 
-Keep the VPN connected for this environment. The current Python transport uses
-the operating system's route, including its VPN tunnel. Do not hard-code port
+Keep the appropriate VPN connected for each environment. The current Python
+transport uses the operating system's route, including its VPN tunnel. Do not hard-code port
 1081 as an HTTP or SOCKS proxy without verifying an actual listener and protocol.
 If V2BOX changes to a local-proxy mode, its TCP tunneling needs explicit transport
 support; setting an HTTPS proxy variable alone does not configure the SDK's raw
