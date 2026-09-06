@@ -250,6 +250,13 @@ class CausalRuleTests(unittest.TestCase):
             self.assertEqual(rows[71].entry, direction)
             self.assertTrue(rows[72].exit_long if direction == 1 else rows[72].exit_short)
 
+    def test_sma_crossover_requires_a_sign_transition(self):
+        for price, direction in (("101", 1), ("99", -1)):
+            bars = [candle(i) for i in range(61)] + [candle(61, price), candle(62, price)]
+            rows = decisions(bars, self.cfg)["sma_cross"]
+            self.assertEqual(rows[61].entry, direction)
+            self.assertEqual(rows[62].entry, 0)
+
 
 class ExperimentSafetyTests(unittest.TestCase):
     def setUp(self):
