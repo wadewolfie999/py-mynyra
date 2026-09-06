@@ -1,0 +1,31 @@
+{
+  "purpose": "Original local experiment commit records, retained because GitHub connector publication creates new commit identities. Trees are preserved exactly in the publication history. These are local Git timestamps, not independent timestamp attestations.",
+  "base_commit": "85797d449eeae821728011494e7dfa5e91fc444e",
+  "commits": [
+    {
+      "sha": "d3c664a1b73bbb2fcfb11428a25c329c541b1c66",
+      "canonical_commit_object": "tree 701b5346f1baacbf68dc20e435c9c0a90f360de5\nparent 85797d449eeae821728011494e7dfa5e91fc444e\nauthor wadewolfie999 <wadewolfie999@gmail.com> 1788651018 +0000\ncommitter wadewolfie999 <wadewolfie999@gmail.com> 1788651018 +0000\n\nPreregister bounded XAUUSD M1 comparison before results\n",
+      "tree": "701b5346f1baacbf68dc20e435c9c0a90f360de5"
+    },
+    {
+      "sha": "84456018a7fa25720fbade341dd09e89c63a27b2",
+      "canonical_commit_object": "tree bb686ee55f3f200f9d31553ee46b9d6ba54713ad\nparent d3c664a1b73bbb2fcfb11428a25c329c541b1c66\nauthor wadewolfie999 <wadewolfie999@gmail.com> 1788666595 +0000\ncommitter wadewolfie999 <wadewolfie999@gmail.com> 1788666595 +0000\n\nImplement deterministic offline strategy screen and sealed evaluation\n",
+      "tree": "bb686ee55f3f200f9d31553ee46b9d6ba54713ad"
+    },
+    {
+      "sha": "1cee2cb5cbe2a2a7f867e2d46381fad2f734c8d8",
+      "canonical_commit_object": "tree d529690efa581700a4124cd397eab7de480c335e\nparent 84456018a7fa25720fbade341dd09e89c63a27b2\nauthor wadewolfie999 <wadewolfie999@gmail.com> 1788666849 +0000\ncommitter wadewolfie999 <wadewolfie999@gmail.com> 1788666849 +0000\n\nAdd independent ledger audit and explicit SMA transition regression\n",
+      "tree": "d529690efa581700a4124cd397eab7de480c335e"
+    },
+    {
+      "sha": "10095a448aba609702da665023542aa2f4fc94c9",
+      "canonical_commit_object": "tree ce13ca036ad96f84fa1836b58a44763e1c59df92\nparent 1cee2cb5cbe2a2a7f867e2d46381fad2f734c8d8\nauthor wadewolfie999 <wadewolfie999@gmail.com> 1788667035 +0000\ncommitter wadewolfie999 <wadewolfie999@gmail.com> 1788667035 +0000\n\nFreeze empty finalist set before sealed-period decision\n",
+      "tree": "ce13ca036ad96f84fa1836b58a44763e1c59df92"
+    },
+    {
+      "sha": "e578559e4579755c21403b82741338a2b1497001",
+      "canonical_commit_object": "tree 9ef8c1190c6f10ea2d828083a36758cc2d5ef335\nparent 10095a448aba609702da665023542aa2f4fc94c9\nauthor wadewolfie999 <wadewolfie999@gmail.com> 1788667584 +0000\ncommitter wadewolfie999 <wadewolfie999@gmail.com> 1788667584 +0000\n\nReport rejected candidates, identical replay and preserved April seal\n",
+      "tree": "9ef8c1190c6f10ea2d828083a36758cc2d5ef335"
+    }
+  ]
+}
