@@ -57,7 +57,14 @@ invalidate the affected evidence explicitly and use new artifact names. If April
 has influenced the correction, it no longer supplies untouched evaluation data.
 Independent reproduction uses the same commands with fresh output names. Compare
 every result-file SHA-256; registration metadata and indices are deterministic too.
-No system-clock timestamp is part of the numerical output.
+No system-clock timestamp is part of the numerical output. The independent auditor
+checks every trade's commission and net accounting, stage reset balances, baseline
+behavior, registered coverage, artifact hashes and full replay identity:
+
+```sh
+PYTHONPATH=src .venv/bin/python -m mynyra.experiment screen --output .local/experiments/screen_v1_replay
+PYTHONPATH=src .venv/bin/python scripts/audit-comparison.py --screen .local/experiments/screen_v1 --replay .local/experiments/screen_v1_replay --output .local/experiments/audit_replay_v1.json
+```
 
 ## Scope of the model
 

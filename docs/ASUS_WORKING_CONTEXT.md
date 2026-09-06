@@ -23,9 +23,11 @@ The current project state is:
   private local data.
 - A one-hour FIBO XAUUSD bid/ask capture supplies initial cost evidence. It is not
   proof of executable profitability or all-session trading costs.
-- The next work is source-backed research and a controlled comparison of 5–7
-  strategy candidates. Define rules and chronological data splits before examining
-  results. Do not submit demo or live orders.
+- The first source-backed five-candidate comparison is complete: none passed
+  March selection and April remains sealed. Read the
+  [comparison report](XAUUSD_COMPARISON_REPORT.md) and
+  [workflow](COMPARISON_WORKFLOW.md) before proposing another experiment.
+  New rules or layers need a new registered experiment. Do not submit orders.
 
 ## Local data and credentials
 

@@ -1,8 +1,10 @@
 # Python implementation plan
 
-Status: updated 2026-09-04. Implemented scope is the connection probe, bounded
+Status: updated 2026-09-06. Implemented scope includes the connection probe, bounded
 XAUUSD/M1 capture, Faraz archive audit and UTC normalization, fixed-interval FIBO
-quote recorder, and reproducible quote summary. The
+quote recorder, reproducible quote summary, and an offline chronological strategy
+simulator. The [first five-candidate comparison](XAUUSD_COMPARISON_REPORT.md)
+produced no finalists; April remains sealed. The
 [data readiness gate](DATA_READINESS_REPORT.md) now passes for conservative
 historical screening. Remaining increments depend on new evidence and the owner's
 unresolved economic decisions.
@@ -15,8 +17,8 @@ a funding candidate; its website does not define project requirements.
 The owner has no existing strategy. Researching and testing about 5–7 candidates
 is part of this project, with deep internet research authorized when strategy
 selection is the focus. The [strategy research plan](STRATEGY_RESEARCH_PLAN.md)
-sets the comparison approach. No strategy, order support or loss-rule engine is
-implemented yet.
+sets the comparison approach. Five historical rules and a rough simulated
+loss-rule model are implemented; no order support exists.
 
 ## First increment: establish identifiable, read-only demo access
 
@@ -52,6 +54,9 @@ Current modules:
 | `market.py` | Exact price-bar conversion, owner-only capture persistence and quote validation/statistics |
 | `datasets.py` | Safe ZIP audit, Tehran-to-UTC normalization and full output validation |
 | `cli.py` | Operator commands, bounded lifecycle, filtered output and exit codes |
+| `strategies.py` | Causal historical candidate decisions and indicator semantics |
+| `simulation.py` | Offline fills, costs, sizing, account lifecycle and metrics |
+| `experiment.py` | Registered cases, private artifacts, selection and evaluation seal |
 
 The current probe has a 45-second overall deadline, 10-second request deadlines,
 10-second heartbeats and sequential requests. A failed run closes its service;
@@ -101,7 +106,7 @@ not a completed dependency security review or approval for a deployed trading se
 | --- | --- | --- |
 | 1 — complete | View-only demo consent and account read | Exact account, currency, balance and symbol list confirmed against the API |
 | 2 — data gate complete | Verify XAUUSD metadata and M1 availability; normalize supplied history; record and summarize FIBO bid/ask | 3.55 million rows normalized and independently validated; 1,000 FIBO bars and 3,285 one-hour quote samples captured; limits are explicit |
-| 3 | Compare 5–7 simple strategies under common costs and rough account rules, then test useful layers | Reproducible rules, all trials recorded, independent evaluation and explicit failure evidence; no forced winner |
+| 3 — first screen complete | Five fixed strategies compared under common costs and rough account rules | All failed March gates; empty finalist freeze preserves April; layers/new rules need a new experiment |
 | 4 | Bounded demo execution and recovery, only after its exposure limits are set | Size/price rounding, server acknowledgement, fills/rejections, partial execution, restart reconciliation and STOP behavior |
 | 5 | Decide whether a paid/live/prop attempt is justified | Current strategy evidence, firm eligibility, payout route, spending cap and survivable failure state |
 | 6 | Measure cash realization and repeatability | Receipts reconciled against attempts, fees, operating costs and obligations; sufficient remaining reserve |
@@ -133,20 +138,21 @@ a change.
 
 ## Questions that change the next step
 
-1. Which chronological development, selection and sealed evaluation boundaries
-   give the 100,000-row XAUUSD M1 sample a fair comparison without leakage?
+1. Which new hypothesis, if any, justifies another experiment after the first
+   negative screen? Preserve the [frozen protocol](XAUUSD_COMPARISON_PROTOCOL.md)
+   and make a new independent-evaluation decision before inspecting April.
 2. What is the first cash-received target, the operating cost/runway baseline, and
    the maximum total cash loss/spend authorized? What debt/attempt/STOP limits apply?
-3. Which 5–7 distinct rules merit testing, and what evidence would justify keeping
-   or rejecting them? Resolve this through the research and comparison work.
+3. What evidence beyond the five rejected rules would justify investing in a
+   new strategy or a separately measured layer?
 4. For an eventual funding account, which provider permits the intended automation,
    accepts the owner and offers suitable rules and a usable payout route? What
    counts as cash under operational control? FeneFX is not a current candidate.
 
-The read-only connection and historical-data gates are complete. Candidate
-research can now begin without a chosen funding provider or an owner-supplied
-strategy. Historical screening must follow the readiness report's constraints;
-real-provider accuracy and economic exposure require their own evidence and inputs.
+The read-only connection, historical-data preparation and first candidate screen
+are complete. No candidate is ready for advancement. Future research must follow
+the readiness report's constraints; real-provider accuracy and economic exposure
+require their own evidence and inputs.
 
 ## Sources
 

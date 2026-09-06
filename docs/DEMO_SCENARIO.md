@@ -65,9 +65,9 @@ between closes. M1 is the strategy timeframe; finer observations or conservative
 bounds are needed for loss-limit evidence. Report gaps in that evidence explicitly.
 
 The actual FIBO demo is the data/connection test account. No evidence establishes
-that it enforces this rough model. The current Python code supports read-only
-connection/account probes, historical-data normalization and quote recording; it
-does not enforce this model or place orders.
+that it enforces this rough model. The Python code now also implements these
+defaults in the offline [historical comparison](XAUUSD_COMPARISON_REPORT.md).
+That simulator does not control the broker account or place orders.
 
 ## Next useful work
 

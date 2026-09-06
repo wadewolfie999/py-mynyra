@@ -26,6 +26,16 @@ Each command prints one filtered JSON result and exits. Success for an earlier
 check does not imply success for a later check. The probe has no order-placement
 command or live endpoint option.
 
+## Offline strategy comparison
+
+The [XAUUSD M1 comparison](docs/XAUUSD_COMPARISON_REPORT.md) tested five
+preregistered strategies plus no-trade under common cost scenarios, separately
+measuring one-ounce signal economics and rough $3,000 account feasibility.
+No candidate passed March selection; April remains sealed. The
+[reproduction workflow](docs/COMPARISON_WORKFLOW.md) covers the offline simulator,
+private artifacts, independent audit and evaluation guard. No credentials,
+live quote campaign or order path are used by this experiment.
+
 ## Local setup
 
 The initial supported/tested runtime is Python 3.11; `.python-version` records
