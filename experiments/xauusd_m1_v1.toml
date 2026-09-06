@@ -1,0 +1,91 @@
+id = "xauusd_m1_v1"
+schema = 1
+symbol = "XAUUSD"
+timeframe = "M1"
+input_sha256 = "ef8398e0b732bc43f1bb9137fac0cab56c579eda51e7800df198a3fc52d53310"
+input_rows = 100000
+decimal_precision = 28
+candidate_order = ["sma_cross", "channel_break", "hour_momentum", "band_reentry", "rsi_reentry"]
+variants_per_candidate = 1
+layers = 0
+
+[periods]
+development_start = "2026-01-20T03:59:00Z"
+selection_start = "2026-03-01T00:00:00Z"
+evaluation_start = "2026-04-01T00:00:00Z"
+evaluation_end = "2026-05-01T20:30:00Z"
+selection_cohorts = ["2026-03-02T00:00:00Z", "2026-03-09T00:00:00Z", "2026-03-16T00:00:00Z", "2026-03-23T00:00:00Z"]
+
+[execution]
+entry_start_hour_utc = 6
+entry_end_hour_utc = 19
+flatten_hour_utc = 20
+tick = "0.01"
+atr_period = 14
+minimum_contiguous_bars = 61
+spreads = ["0.48", "0.58", "0.80"]
+slippages_per_side = ["0", "0.05", "0.15"]
+price_sides = ["mid", "bid", "ask"]
+commission_rate = "0.00003"
+swap_long_per_ounce = "-0.68"
+swap_short_per_ounce = "0.28"
+swap_hour_utc = 20
+swap_minute_utc = 59
+triple_swap_weekday = 2
+
+[account]
+initial_balance = "3000"
+risk_fraction = "0.0025"
+leverage = "25"
+margin_fraction = "0.50"
+min_ounces = 1
+step_ounces = 1
+max_ounces = 4000
+daily_floor_fraction = "0.96"
+total_floor = "2640"
+stage_target = "3120"
+stages = 2
+
+[selection]
+max_finalists = 2
+minimum_trades = 50
+minimum_active_days = 20
+bootstrap_samples = 5000
+bootstrap_block_days = 2
+bootstrap_seed = 20260905
+lower_quantile = "0.01"
+base_spread = "0.48"
+gate_spread = "0.58"
+base_slippage = "0.05"
+gate_slippage = "0.15"
+
+[strategies.sma_cross]
+fast = 20
+slow = 60
+stop_atr = "2"
+max_hold_minutes = 120
+
+[strategies.channel_break]
+entry_lookback = 30
+exit_lookback = 10
+stop_atr = "2"
+max_hold_minutes = 120
+
+[strategies.hour_momentum]
+lookback = 60
+stop_atr = "2"
+max_hold_minutes = 60
+
+[strategies.band_reentry]
+lookback = 20
+deviations = "2"
+stop_atr = "2"
+max_hold_minutes = 30
+
+[strategies.rsi_reentry]
+period = 14
+lower = "30"
+upper = "70"
+neutral = "50"
+stop_atr = "2"
+max_hold_minutes = 30

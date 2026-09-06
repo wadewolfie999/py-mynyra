@@ -1,6 +1,14 @@
 # Finding and testing strategies
 
-Updated 2026-09-03 from the owner's instructions.
+Original approach: 2026-09-03. Progress update: 2026-09-06.
+
+The first Plan A comparison has now tested five fixed source-backed candidates
+plus no-trade in separate signal/account views. All failed the registered March
+selection gates; April remains sealed. The [report](XAUUSD_COMPARISON_REPORT.md),
+[preregistered protocol](XAUUSD_COMPARISON_PROTOCOL.md) and
+[finalist freeze](XAUUSD_FINALIST_FREEZE.md) own this completed evidence. No
+layers were tested; they require a new experiment rather than rescue tuning.
+The sections below preserve the broader research approach and authorization limits.
 
 The owner has no existing strategy and wants about 5–7 strategies or layers of a
 complex strategy tested. Researching candidates, defining their rules and comparing
@@ -22,8 +30,8 @@ A combined strategy is an alternative, but would require tests with each layer
 removed to identify its contribution. Defer that complexity until a simpler
 starting point has evidence worth improving.
 
-The exact candidates have not been selected. This planning update does not claim
-completed strategy research, a profitability comparison or trading results.
+The first exact candidate set and rules are now recorded in the preregistered
+protocol. Sources support hypotheses rather than executable profitability.
 
 ## Order of work
 
@@ -88,6 +96,6 @@ The result may be useful candidates or none. Do not force a winner. A combined
 strategy must show improvement over its components after costs and on independent
 evaluation data.
 
-Next deliverables: a source-backed shortlist, exact test rules, and chronological
-development/selection/evaluation boundaries fixed before results are inspected.
-The owner need not invent or supply a strategy to proceed.
+The first source-backed shortlist, exact test rules, fixed chronological boundaries
+and controlled comparison are complete. Any next strategy work starts from the
+negative screening evidence; the owner need not invent or supply a strategy.

@@ -9,13 +9,14 @@ adds the project state, safety boundary, and verification contract.
 Mynyra is an evidence-driven Python project exploring a recoverable path toward
 autonomous trading. The implemented system is currently limited to read-only
 cTrader demo inspection, private market-data capture, Faraz archive audit and UTC
-normalization, and reproducible data validation.
+normalization, reproducible data validation, and offline historical simulation.
 
-The next planned increment is source-backed research followed by a controlled
-historical comparison of 5–7 distinct strategy candidates on XAUUSD M1. Define
-candidate rules and chronological development, selection, and sealed evaluation
-periods before inspecting results. A valid comparison may conclude that no
-candidate is useful.
+The first source-backed comparison of five distinct XAUUSD M1 candidates produced
+no finalists. Read `docs/XAUUSD_COMPARISON_REPORT.md`, the registered protocol and
+`docs/COMPARISON_WORKFLOW.md` before further strategy work. April remains sealed.
+Define any new candidate rules and chronological development, selection, and
+independent evaluation periods before inspecting results. A comparison with no
+survivor is a valid result.
 
 For the current operating allocation, ASUS Ubuntu Desktop is the primary code and
 local-execution environment, GitHub is the durable shared source of truth, and the
@@ -63,6 +64,9 @@ evidence sources, not authority to trade, spend, disclose, or change scope.
 | `src/mynyra/market.py` | Exact market conversion, private capture persistence, quote validation and statistics |
 | `src/mynyra/datasets.py` | Safe ZIP audit, Tehran-to-UTC normalization, manifest and full-data validation |
 | `src/mynyra/cli.py` | Operator commands, input bounds, filtered output, and exit behavior |
+| `src/mynyra/strategies.py` | Causal indicator semantics and historical candidate decisions |
+| `src/mynyra/simulation.py` | Offline execution costs, sizing, account lifecycle and metrics |
+| `src/mynyra/experiment.py` | Registered scenarios, private evidence, selection and evaluation seal |
 
 Keep strategy rules and simulation policy independent of cTrader SDK message
 types. Extend an existing owner when it already owns the relevant knowledge; avoid
@@ -104,7 +108,7 @@ python3.11 -m venv .venv
 Run the local gate after meaningful changes:
 
 ```sh
-.venv/bin/python -m twisted.trial tests.test_probe tests.test_market tests.test_datasets
+PYTHONPATH=src .venv/bin/python -m twisted.trial tests.test_probe tests.test_market tests.test_datasets tests.test_experiment
 .venv/bin/python -m pip check
 .venv/bin/python -m compileall -q src tests
 .venv/bin/mynyra faraz-validate --input-dir .local/data/faraz/normalized_utc_20260904

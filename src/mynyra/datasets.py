@@ -10,6 +10,7 @@ import shutil
 import stat
 import tempfile
 from datetime import datetime, timezone
+from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from pathlib import Path, PurePosixPath
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
@@ -26,6 +27,62 @@ NORMALIZED_COLUMNS = (
     "timestamp_utc", "open", "high", "low", "close", "volume"
 )
 SAFE_NAME = re.compile(r"^[A-Za-z0-9._-]{1,64}$")
+
+
+@dataclass(frozen=True)
+class Candle:
+    """One minute-open-labeled UTC reference-price candle, not a bid/ask quote."""
+
+    time: datetime
+    open: Decimal
+    high: Decimal
+    low: Decimal
+    close: Decimal
+
+
+def read_normalized_minutes(path: Path, end: datetime) -> list[Candle]:
+    """Read a causal prefix. Stop before converting OHLC at the sealed boundary.
+
+    Full manifest validation and hash pinning remain the experiment's preflight.
+    This bounded reader independently validates every candle it returns.
+    """
+    if end.tzinfo != timezone.utc:
+        raise ProbeError("The candle boundary must use UTC.")
+    if not path.is_file() or path.is_symlink() or path.stat().st_mode & 0o077:
+        raise ProbeError("The normalized minute file must be private and regular.")
+    candles = []
+    previous = None
+    try:
+        with path.open(newline="", encoding="utf-8") as stream:
+            reader = csv.DictReader(stream)
+            if tuple(reader.fieldnames or ()) != NORMALIZED_COLUMNS:
+                raise ValueError("header")
+            for row in reader:
+                stamp = row["timestamp_utc"]
+                if not stamp.endswith("Z"):
+                    raise ValueError("UTC")
+                timestamp = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+                if timestamp.second or timestamp.microsecond:
+                    raise ValueError("minute")
+                if previous is not None and timestamp <= previous:
+                    raise ValueError("ordering")
+                if timestamp >= end:
+                    break
+                previous = timestamp
+                prices = [Decimal(row[key]) for key in ("open", "high", "low", "close")]
+                o, h, l, c = prices
+                if not all(p.is_finite() and p > 0 for p in prices):
+                    raise ValueError("prices")
+                if not l <= o <= h or not l <= c <= h or int(row["volume"]) < 0:
+                    raise ValueError("OHLCV")
+                candles.append(Candle(timestamp, o, h, l, c))
+                if len(candles) > 100_000:
+                    raise ValueError("row bound")
+    except (ValueError, TypeError, KeyError, InvalidOperation, AttributeError):
+        raise ProbeError("The normalized minute prefix is invalid.") from None
+    if not candles:
+        raise ProbeError("The normalized minute prefix is empty.")
+    return candles
 
 
 def archive_sha256(path: Path) -> str:

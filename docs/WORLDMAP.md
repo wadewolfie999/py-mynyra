@@ -4,6 +4,11 @@ Status: updated understanding, 2026-09-03. The owner wants autonomous Python tra
 on XAUUSD/M1 and has no existing strategy. Researching and comparing 5–7 candidates
 is part of this project. Personal financial limits and a real payout path remain open.
 
+Progress, 2026-09-06: the [first five-candidate historical comparison](XAUUSD_COMPARISON_REPORT.md)
+produced no March finalists. The April evaluation period remains sealed. This is
+negative screening evidence, not evidence of a profitable economic path. A new
+strategy experiment needs a new preregistration; no orders or shadow run followed.
+
 This map interprets the supplied
 [canonical problem specification](03-Mynyra_Real_Problem_Specification_CANONICAL.md).
 That document supplies the problem definition. The user's current request supplies

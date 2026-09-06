@@ -74,3 +74,39 @@ The ASUS cTrader TLS check passed with TLS 1.3 through the v2rayN `singbox_tun`
 system route. The transferred token passed the bounded application and single-demo-
 account read sequence with `accounts` scope and 60 symbols. No token was created or
 refreshed, no trading scope was selected, and no order path was called or changed.
+
+## Offline comparison verification — 2026-09-06
+
+This section supersedes the earlier absence of a historical simulator. It does
+not refresh the historical network, credential or broker-account observations.
+
+| Check | Observed result | Scope |
+| --- | --- | --- |
+| Preregistration | Commit `d3c664a` precedes implementation and all strategy results | Fixed candidate rules, costs, sizing, partitions, trial budget and selection policy |
+| Supported runtime and imports | Python 3.11.14; `PYTHONPATH=src` selects this worktree | Shared venv reused without modifying its installation |
+| Full test gate | 71 tests passed | Existing 31 safety/data tests plus 40 causal, execution, account, selection and seal tests |
+| Dependencies / compilation | `pip check` and compilation of src/tests/scripts passed | No dependency changes; supported local environment |
+| Full Faraz validation | 81 series, 3,552,511 rows passed; hashes, OHLCV and UTC order valid | Structural validation only; no sealed strategy results inspected |
+| Registered screen | All 672 cases completed | Five candidates plus no-trade, all 27 cost/side scenarios, both views, development/March and four fixed-start account cohorts |
+| Independent accounting audit | All 672 cases passed | 189,339 scenario trade records reconciled; repeated scenarios are not independent observations |
+| Independent full replay | Every result SHA-256 and the complete index matched | Deterministic numerical output, provenance and case coverage reproduced |
+| Finalists | Empty manifest; sanitized freeze committed as `10095a4` | All candidates rejected under the preregistered March gates; no reselection |
+| April seal | Evaluation returned `not_opened`, reason `no_finalists` | Both strategy runs loaded only 69,846 bars through 2026-03-31 23:59 UTC |
+| Private evidence | All generated evidence files checked owner-only; `.local/` and `.venv` untracked | Raw data, ledgers and run outputs excluded from Git |
+| Review preparation | Diff whitespace checks passed | Report/source ready for an unmerged PR; no automatic merge |
+
+The full screen index and independent replay index both have SHA-256
+`5454250a38b492b511ba478ed23c84ccb1bdde3b3a2d9e3bc1e5ce460c3f0ff0`.
+The finalist manifest SHA-256 is
+`f13616e61ec6360be7bca2adcb8d0e9629701b5bc63f3c926eb3a92854fc3ffb`.
+Private command output and the completed gate are retained in
+`.local/experiments/verification_v1.json`; independent replay/accounting evidence
+is in `.local/experiments/audit_replay_v1.json`. See the
+[report](XAUUSD_COMPARISON_REPORT.md) and
+[reproduction commands](COMPARISON_WORKFLOW.md).
+
+No credentialed checks, orders, trading-scope changes, quote/shadow campaigns or
+spending occurred in this increment. No protocol correction or numerical source
+change was made after historical results. April was not consumed for a forced
+winner. Untested parameter neighborhoods, limited market regimes, unknown quote
+paths, later-period cost evidence and actual fills remain material limitations.
