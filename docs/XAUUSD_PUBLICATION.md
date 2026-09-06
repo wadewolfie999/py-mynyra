@@ -1,25 +1,29 @@
 # Publication and original commit evidence
 
-Command-line HTTPS Git had no configured credential for pushing, and the existing
-SSH trust configuration did not recognize GitHub. Neither credentials nor SSH
-configuration were changed. The authorized branch and PR are published through
-the connected GitHub integration instead.
+Publication is pending. HTTPS Git had no credential available for pushing; existing
+SSH trust did not recognize GitHub. The GitHub integration rejected a write with
+HTTP 403, `Resource not accessible by integration`. Those attempts did not publish
+the branch or create a PR.
 
-The integration creates new commit identities. It preserves the exact Git trees
-of the original local commit sequence in order, with each publication commit
-message identifying its original local SHA. The report's short commit references
-(`d3c664a`, `8445601`, `1cee2cb`, `10095a4`, `e578559`) refer to those **local**
-experiment checkpoints, not the later publication commit identities.
+Run the prepared script from an authenticated terminal:
 
-[`XAUUSD_LOCAL_COMMITS.json`](XAUUSD_LOCAL_COMMITS.json) preserves their full
-canonical commit objects, parent references and tree IDs. Their original SHA-1
-identities can be checked by hashing Git's `commit <byte-count>\0` header followed
-by the recorded UTF-8 object bytes. Publication verifies each remote tree against
-its local tree before creating the next commit. This retains the original
-preregistration/freeze evidence without claiming that publication happened before
-the experiment. Local Git dates are not an independent timestamp attestation.
+```sh
+bash scripts/publish-comparison.sh --publish
+```
 
-The numerical input/configuration/implementation/result hashes in the protocol,
-freeze and report remain unchanged. No raw data or private experiment files are
-published. A local evidence branch retains the original commits if the working
-branch is subsequently aligned to the published history.
+The script checks the branch, clean worktree, expected push destination and
+original report ancestry. It pushes without rewriting commits and verifies the
+remote head. With an authenticated `gh` installation, it reuses an existing PR
+or creates one using [the prepared body](XAUUSD_PR_BODY.md). Otherwise it prints
+the comparison URL for creating the PR in GitHub. It never merges the PR.
+`--check` performs only local preflight checks. Errors appear in the terminal
+and stop execution; fix the reported condition before rerunning.
+
+The report's short commit references identify original local checkpoints.
+[XAUUSD_LOCAL_COMMITS.json](XAUUSD_LOCAL_COMMITS.json) also preserves canonical
+commit objects for the preregistration, simulator, audit, freeze and report.
+Local Git dates are not an independent timestamp attestation. Normal Git push
+preserves these identities and their parent history.
+
+Numerical provenance and result hashes remain unchanged. Raw data and private
+experiment artifacts remain excluded from publication.
