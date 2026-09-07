@@ -36,6 +36,10 @@ No candidate passed March selection; April remains sealed. The
 private artifacts, independent audit and evaluation guard. No credentials,
 live quote campaign or order path are used by this experiment.
 
+The [Praxis Step 1 report](docs/PRAXIS_STEP1.md) defines ten additional
+research candidates, diagnoses the SMA sizing effect, and assesses longer-history
+sources. It does not run the new batch or unseal April.
+
 ## Praxis
 
 [Praxis](docs/PRAXIS.md) defines how we carry operations through judgment, execution,
