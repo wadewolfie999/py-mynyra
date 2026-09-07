@@ -1,4 +1,4 @@
-# Verification evidence — updated 2026-09-04
+# Verification evidence — updated 2026-09-07
 
 Source: `wadewolfie999/py-mynyra`. Initial repository state and connection work are
 recorded in earlier Git history. This document reports the evidence available for
@@ -110,3 +110,32 @@ spending occurred in this increment. No protocol correction or numerical source
 change was made after historical results. April was not consumed for a forced
 winner. Untested parameter neighborhoods, limited market regimes, unknown quote
 paths, later-period cost evidence and actual fills remain material limitations.
+
+## Bigi workstation cTrader validation — 2026-09-07
+
+This validation ran on branch `codex/bigi-ctrader-connection-validation`, created
+directly from then-current `origin/main` commit
+`373f6068db872fe7a389a0ac540528e5197a3e38`. The workstation was macOS
+26.6.1/arm64 with Homebrew Python 3.11.16. This establishes Python 3.11
+compatibility on this Mac; it is not an exact Python 3.11.14 ASUS parity claim.
+
+| Check | Observed result | Scope |
+| --- | --- | --- |
+| Locked installation | `requirements.lock` and the editable package installed; `pip check` passed | The locked dependencies are internally consistent in this Python 3.11.16 environment |
+| Compilation | `src`, `tests` and `scripts` compiled successfully | Checked Python sources were syntactically importable; this is not runtime or provider evidence |
+| Full offline gate | All 83 tests passed | Probe, market, dataset, experiment, SMA diagnostic, benchmark, catalog and Praxis Step 3 behavior passed locally |
+| Demo TLS | PASS, 2026-09-07 17:42:45 UTC, TLS 1.3 | Certificate-verified connection to the fixed `demo.ctraderapi.com:5035` endpoint |
+| Application authentication | PASS, 2026-09-07 17:42:46 UTC | The demo API accepted the private application credentials |
+| Demo account read | PASS, 2026-09-07 17:45:36 UTC; USD; 60 symbols; `accounts` scope | Exact account mapping, API-confirmed non-live status, view-only account authentication, currency and symbol-list reads |
+| Private-state boundary | Credential and complete account-result files were regular, owner-only, ignored and untracked | Credential values, account identifiers, balances and raw provider payloads remain outside Git |
+
+The first account attempt failed closed before account selection because the API
+did not explicitly report view-only scope. After Vahid separately authorized and
+replaced the access token, the repeated TLS, application and account checks passed.
+No token refresh or rewrite was performed by the validation command itself.
+
+These results prove bounded read-only access to one API-confirmed demo account.
+They do not prove profitability, order readiness, token recovery, reconnect
+behavior, unattended operation, live-account safety or authority to trade. No
+order, market/quote capture, historical experiment, trading-scope change,
+deployment or release occurred during this validation.
