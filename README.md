@@ -36,6 +36,12 @@ No candidate passed March selection; April remains sealed. The
 private artifacts, independent audit and evaluation guard. No credentials,
 live quote campaign or order path are used by this experiment.
 
+## Praxis
+
+[Praxis](docs/PRAXIS.md) defines how we carry operations through judgment, execution,
+verification and a useful handoff. The [Step 2 catalog and benchmark](docs/PRAXIS_STEP2.md)
+tracks the current data-handling work under the [research sequence](docs/RESEARCH_EXPANSION_SEQUENCE.md).
+
 ## Local setup
 
 The initial supported/tested runtime is Python 3.11; `.python-version` records

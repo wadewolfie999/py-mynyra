@@ -1,5 +1,7 @@
 # Locked research expansion sequence
 
+Operating discipline: [Praxis](PRAXIS.md).
+
 Agreed with the owner on 2026-09-07. This document owns the order and completion
 criteria for the next research expansion. It is a work plan, not a numerical
 preregistration or evidence of completed experiments.
