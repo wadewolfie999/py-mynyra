@@ -44,7 +44,8 @@ sources. It does not run the new batch or unseal April.
 
 [Praxis](docs/PRAXIS.md) defines how we carry operations through judgment, execution,
 verification and a useful handoff. The [Step 2 catalog and benchmark](docs/PRAXIS_STEP2.md)
-tracks the current data-handling work under the [research sequence](docs/RESEARCH_EXPANSION_SEQUENCE.md).
+and [Step 3 frozen-path proof](docs/PRAXIS_STEP3.md) track the current data-handling
+work under the [research sequence](docs/RESEARCH_EXPANSION_SEQUENCE.md).
 
 ## Local setup
 
