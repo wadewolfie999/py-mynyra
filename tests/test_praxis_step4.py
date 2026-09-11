@@ -275,3 +275,53 @@ class ExpandedBoundaryTests(unittest.TestCase):
                                      'save':lambda p,v:p.write_text(__import__('json').dumps(v))}),patch('os.umask'),patch.object(sys,'argv',['praxis-step4.py','evaluate','--output',str(output)]):
                 main()
             self.assertEqual(__import__('json').loads(output.read_text())['reason'],'independent_data_unavailable')
+
+
+class CrossExperimentIdentity(unittest.TestCase):
+    def test_identical_baseline_economics_can_be_cataloged_in_new_experiment(self):
+        import tempfile,json
+        from pathlib import Path
+        from mynyra.catalog import Catalog
+        from mynyra.experiment import run_step4,load_runs,save
+        cfg=step4_settings();data=bars([100]*80)
+        costs=Costs(D('.58'),D('.15'),'mid',D('.00003'),D('.01'))
+        case=('development','no_trade',costs,'signal',data[0].time,data[-1].time+MINUTE)
+        prov={'test':'synthetic'}
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);output=root/'.local/screen'
+            with patch('mynyra.experiment.ROOT',root),patch('mynyra.experiment.step4_inputs',return_value=data),patch('mynyra.experiment.step4_cases',return_value=[case]),patch('mynyra.experiment.step4_provenance',return_value=prov):
+                run_step4(output,cfg,prov)
+                _,loaded=load_runs(output,prov,[case])
+                result=next(iter(loaded.values()))
+                self.assertEqual(result['experiment'],cfg['id'])
+                original=simulate(data,[Decision()]*len(data),'no_trade',cfg,costs,'signal',case[4],case[5])
+                original['period']='development'
+                from mynyra.experiment import json_value
+                self.assertEqual({k:v for k,v in result.items() if k!='experiment'},json_value(original))
+                original_path=root/'.local/original.json';save(original_path,original)
+                catalog=Catalog(root/'.local/catalog.sqlite',root/'.local');catalog.migrate()
+                with catalog.transaction() as db:
+                    old=catalog.register_artifact(db,original_path,'application/json')
+                    new=catalog.register_artifact(db,output/'run_0000.json','application/json')
+                self.assertNotEqual(old,new)
+                self.assertEqual(catalog.verify_references(),2)
+
+    def test_result_experiment_mismatch_is_rejected_even_with_updated_hash(self):
+        import tempfile,json
+        from pathlib import Path
+        from mynyra.experiment import run_cases,load_runs,provenance
+        from mynyra.datasets import archive_sha256
+        from mynyra.config import ProbeError
+        cfg=settings(DEFAULT_CONFIG);data=bars([100]*80)
+        costs=Costs(D('.58'),D('.15'),'mid',D('.00003'),D('.01'))
+        case=('development','no_trade',costs,'signal',data[0].time,data[-1].time+MINUTE)
+        prov={'test':'synthetic'}
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);output=root/'.local/screen'
+            with patch('mynyra.experiment.ROOT',root):
+                run_cases(data,cfg,[case],output,prov,{})
+                reg=json.loads((output/'registration.json').read_text());reg['experiment']='praxis_step4_v1'
+                (output/'registration.json').write_text(json.dumps(reg))
+                idx=json.loads((output/'index.json').read_text());idx['registration_sha256']=archive_sha256(output/'registration.json')
+                (output/'index.json').write_text(json.dumps(idx))
+                with self.assertRaises(ProbeError):load_runs(output,prov,[case])

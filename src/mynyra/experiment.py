@@ -168,6 +168,8 @@ def load_runs(folder: Path, prov: dict, expected_cases=None) -> tuple[dict, dict
         if archive_sha256(path) != entry["sha256"]:
             raise ProbeError("Experiment run hash mismatch.")
         item = read_private(path)
+        if registration.get('experiment') is not None and item.get('experiment') != registration['experiment']:
+            raise ProbeError('Run experiment identity differs from registration.')
         for key in ("period", "candidate", "scenario", "view"):
             if item[key] != entry[key] or item[key] != case[key]:
                 raise ProbeError("Run identity differs from registration.")
@@ -467,7 +469,7 @@ def run_step4(output, cfg, prov):
     cases=step4_cases(cfg)
     data={'input_sha256':cfg['input_sha256'],'loaded_prefix_rows':len(bars),
           'loaded_last_timestamp':bars[-1].time.isoformat(),'access_class':'exploratory'}
-    save(output/'registration.json',{'provenance':prov,'data':data,'cases':[
+    save(output/'registration.json',{'experiment':cfg['id'],'provenance':prov,'data':data,'cases':[
         {'period':p,'candidate':n,'scenario':c.key,'view':v,'start':a.isoformat(),'end':b.isoformat()}
         for p,n,c,v,a,b in cases]})
     sma=decisions(bars,settings(DEFAULT_CONFIG))['sma_cross']
@@ -483,6 +485,10 @@ def run_step4(output, cfg, prov):
         try:
             result=simulate(bars,calculated[name],name,cfg,cost,view,start,end)
             result['period']=period
+            # Identical baseline economics across experiments must not reuse an
+            # artifact hash at a different catalog path. Bind the experiment in
+            # the result envelope; v1 numerical artifacts remain unchanged.
+            result['experiment']=cfg['id']
             save(output/filename,result)
         except Exception as error:
             save(output/'failure.json',{'status':'incomplete','case_number':number,
