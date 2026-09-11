@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR
 
 from mynyra.datasets import Candle
-from mynyra.strategies import Decision, MINUTE
+from mynyra.strategies import Decision, MINUTE, reference_exit
 
 D = Decimal
 
@@ -52,6 +52,7 @@ class Position:
     swaps: Decimal = D(0)
     adverse_excursion: Decimal = D(0)
     favorable_excursion: Decimal = D(0)
+    frozen_exit: tuple = ()
 
 
 def position_size(balance: Decimal, entry: Decimal, stop_exit: Decimal,
@@ -212,7 +213,7 @@ def simulate(candles: list[Candle], signals: list[Decision], name: str,
                     prior_bar = bar
                     continue
         if not exited and position is None and pending is not None:
-            direction, atr = pending
+            direction, atr, frozen_exit = pending
             if ex["entry_start_hour_utc"] <= bar.time.hour < ex["entry_end_hour_utc"] and bar.time.weekday() < 5:
                 distance = (atr * D(rule["stop_atr"]) / costs.tick).to_integral_value(rounding=ROUND_CEILING) * costs.tick
                 stop = bar.open - direction * distance
@@ -224,7 +225,8 @@ def simulate(candles: list[Candle], signals: list[Decision], name: str,
                     ounces, why = (1, "") if view == "signal" else position_size(balance, entry, stop_exit, direction, costs, ac)
                     if ounces:
                         fee = ounces * entry * costs.commission
-                        position = Position(direction, ounces, bar.time, bar.open, entry, stop, fee)
+                        position = Position(direction, ounces, bar.time, bar.open, entry, stop, fee,
+                                            frozen_exit=frozen_exit)
                         balance -= fee
                         total_pnl -= fee
                     else:
@@ -262,10 +264,11 @@ def simulate(candles: list[Candle], signals: list[Decision], name: str,
                         continue
         if position is not None:
             pending_exit = signal.exit_long if position.direction == 1 else signal.exit_short
+            pending_exit = pending_exit or reference_exit(position.frozen_exit, bar.close)
             if signal.entry:
                 counts["overlap_signal"] += 1
         elif signal.entry:
-            pending = (signal.entry, signal.atr)
+            pending = (signal.entry, signal.atr, signal.frozen_exit)
             counts["flat_signal"] += 1
         prior_bar = bar
     if position is not None:
