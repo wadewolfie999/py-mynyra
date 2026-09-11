@@ -1,0 +1,175 @@
+id = "praxis_step4_v1"
+schema = 1
+symbol = "XAUUSD"
+timeframe = "M1"
+input_sha256 = "82cd15e0f5a9394d1327591c58e93a7d2977edbde470022e82c2d7685b9f9554"
+input_rows = 69846
+decimal_precision = 28
+candidate_order = ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "sma_cross"]
+variants_per_candidate = 1
+layers = 0
+expected_cases = 1344
+maximum_pass_seconds = 7200
+minimum_free_bytes = 2147483648
+
+[periods]
+development_start = "2026-01-20T03:59:00Z"
+selection_start = "2026-03-01T00:00:00Z"
+evaluation_start = "2026-04-01T00:00:00Z"
+selection_cohorts = ["2026-03-02T00:00:00Z", "2026-03-09T00:00:00Z", "2026-03-16T00:00:00Z", "2026-03-23T00:00:00Z"]
+
+[execution]
+entry_start_hour_utc = 6
+entry_end_hour_utc = 19
+flatten_hour_utc = 20
+tick = "0.01"
+atr_period = 14
+minimum_contiguous_bars = 61
+spreads = ["0.48", "0.58", "0.80"]
+slippages_per_side = ["0", "0.05", "0.15"]
+price_sides = ["mid", "bid", "ask"]
+commission_rate = "0.00003"
+swap_long_per_ounce = "-0.68"
+swap_short_per_ounce = "0.28"
+swap_hour_utc = 20
+swap_minute_utc = 59
+triple_swap_weekday = 2
+
+[account]
+initial_balance = "3000"
+risk_fraction = "0.0025"
+leverage = "25"
+margin_fraction = "0.50"
+min_ounces = 1
+step_ounces = 1
+max_ounces = 4000
+daily_floor_fraction = "0.96"
+total_floor = "2640"
+stage_target = "3120"
+stages = 2
+
+[selection]
+max_finalists = 0
+max_priorities = 2
+minimum_trades = 100
+minimum_active_days = 60
+bootstrap_samples = 20000
+bootstrap_block_days = 5
+bootstrap_sensitivity_block_days = 10
+bootstrap_seed = 20260911
+lower_quantile = "0.005"
+base_spread = "0.48"
+gate_spread = "0.58"
+base_slippage = "0.05"
+gate_slippage = "0.15"
+first_half_end = "2026-03-16"
+evaluation_status = "not_opened"
+evaluation_reason = "independent_data_unavailable"
+
+[strategies.P01]
+stop_atr = "2"
+name = "london_range_break"
+max_hold_minutes = 120
+range_start = 480
+range_minutes = 15
+entry_end = 600
+
+[strategies.P02]
+stop_atr = "2"
+name = "previous_day_break"
+max_hold_minutes = 120
+minimum_day_bars = 1200
+maximum_gap_minutes = 90
+
+[strategies.P03]
+stop_atr = "2"
+name = "failed_range_break"
+max_hold_minutes = 60
+lookback = 60
+expiry_bars = 5
+
+[strategies.P04]
+stop_atr = "2"
+name = "compression_break"
+max_hold_minutes = 120
+lookback = 20
+deviations = "2"
+width_history = 120
+warmup = 141
+
+[strategies.P05]
+stop_atr = "2"
+name = "trend_pullback"
+max_hold_minutes = 120
+fast = 20
+slow = 60
+slope_bars = 10
+warmup = 71
+
+[strategies.P06]
+stop_atr = "2"
+name = "impulse_flag"
+max_hold_minutes = 60
+impulse_bars = 5
+impulse_atr = "3"
+consolidation_bars = 5
+consolidation_atr = "1.5"
+expiry_bars = 5
+
+[strategies.P07]
+stop_atr = "2"
+name = "impulse_exhaustion"
+max_hold_minutes = 30
+impulse_bars = 5
+impulse_atr = "3"
+expiry_bars = 5
+
+[strategies.P08]
+stop_atr = "2"
+name = "m15_trend_m1_break"
+max_hold_minutes = 120
+context_minutes = 15
+fast = 20
+slow = 60
+entry_lookback = 10
+
+[strategies.P09]
+stop_atr = "2"
+name = "regression_reentry"
+max_hold_minutes = 60
+lookback = 60
+threshold = "2"
+
+[strategies.P10]
+stop_atr = "2"
+name = "gold_clock_momentum"
+max_hold_minutes = 30
+anchors = [630, 900]
+lookback = 30
+
+[strategies.sma_cross]
+stop_atr = "2"
+fast = 20
+slow = 60
+max_hold_minutes = 120
+
+[evidence]
+raw_path = ".local/data/faraz/raw/af65b7baff054baeb9d645f4c9f2a172.zip"
+raw_sha256 = "f185a02923901863d194b0abf427f4dc00c0ec9bcb387f6b71c008e1d5e4a0bb"
+normalized_path = ".local/data/faraz/normalized_utc_20260904/XAUUSD/1minute.csv"
+normalized_sha256 = "ef8398e0b732bc43f1bb9137fac0cab56c579eda51e7800df198a3fc52d53310"
+manifest_path = ".local/data/faraz/normalized_utc_20260904/manifest.json"
+manifest_sha256 = "fa3cdd4718412f5e35f60dd8e08fa9a3eb5a9fa2f8fc4bd1b6bd69e3c2c6ab16"
+quotes_path = ".local/data/quotes/xauusd_bidask_20260904_1h.csv"
+quotes_sha256 = "e40a574561e1603be828c8fd2adc43dc53a5ca0749c20a0731352fd4f3f5e077"
+snapshot_path = ".local/praxis_step3_proof_v3/snapshot/xauusd_m1_preapril.csv"
+snapshot_sha256 = "82cd15e0f5a9394d1327591c58e93a7d2977edbde470022e82c2d7685b9f9554"
+baseline_config_path = "experiments/xauusd_m1_v1.toml"
+baseline_config_sha256 = "26880725fa66c4cf5d7ec03d60ef9f7891b5789f1384b0c07c890be064f54f6c"
+candidate_spec_path = "docs/PRAXIS_STEP1_CANDIDATES.md"
+candidate_spec_sha256 = "0813b6383fccdf8190e344dcd2d9fd00b2ce08719a0fa31fdaf9b9b9ff840539"
+timezone_version = "2026c"
+london_path = "/usr/share/zoneinfo/Europe/London"
+london_sha256 = "c85495070dca42687df6a1c3ee780a27cbcb82f1844750ea6f642833a44d29b4"
+tzdata_path = "/usr/share/zoneinfo/tzdata.zi"
+tzdata_sha256 = "bce4e2473fda8a22f5be65be2ef01e2e22cba5e721d8fa8d68df3d5f67c23f13"

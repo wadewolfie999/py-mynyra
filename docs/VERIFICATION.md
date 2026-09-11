@@ -110,3 +110,28 @@ spending occurred in this increment. No protocol correction or numerical source
 change was made after historical results. April was not consumed for a forced
 winner. Untested parameter neighborhoods, limited market regimes, unknown quote
 paths, later-period cost evidence and actual fills remain material limitations.
+
+
+## Praxis Step 4 verification
+
+See [the report](PRAXIS_STEP4.md), [frozen protocol](PRAXIS_STEP4_PROTOCOL.md),
+[empty advancement record](PRAXIS_STEP4_FREEZE.md), and
+[complete recovery proof](PRAXIS_STEP4_RECOVERY.md).
+
+| Check | Result |
+| --- | --- |
+| Runtime / synthetic gate | Python 3.11.14; 111 tests, dependency check and compilation passed |
+| Data gate | All 81 series / 3,552,511 rows validated before the corrected freeze |
+| Original baseline | 672/672 numerical hashes reproduced before expanded execution |
+| Expanded batch / replay | 1,344/1,344 cases; identical complete index and result hashes |
+| Accounting | 176,567 scenario trade records independently reconciled |
+| Baselines inside Step 4 | 224 SMA/no-trade numerical bodies equal original evidence |
+| Catalog recovery | 2,060 references per tree from the frozen runner; complete closure verifies 2,066 and all nine registry inputs |
+| Privacy | 12,900 private files checked; zero mode/symlink issues; original Step 3 proof and snapshot unchanged |
+| Decision | All ten new candidates rejected by economic gates; zero finalists; evaluation not opened |
+
+The first attempt's 523 partial files remain invalidated and excluded. Its
+experiment-identity correction changed no economic rule and preceded performance
+inspection. No network/account checks were necessary for this offline increment;
+no order, scope change, spending, capture or shadow campaign occurred. The evidence
+supports an exploratory negative screen, not independent or executable profitability.

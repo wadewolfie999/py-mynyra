@@ -168,6 +168,8 @@ def load_runs(folder: Path, prov: dict, expected_cases=None) -> tuple[dict, dict
         if archive_sha256(path) != entry["sha256"]:
             raise ProbeError("Experiment run hash mismatch.")
         item = read_private(path)
+        if registration.get('experiment') is not None and item.get('experiment') != registration['experiment']:
+            raise ProbeError('Run experiment identity differs from registration.')
         for key in ("period", "candidate", "scenario", "view"):
             if item[key] != entry[key] or item[key] != case[key]:
                 raise ProbeError("Run identity differs from registration.")
@@ -368,3 +370,212 @@ def main(argv=None):
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+# Step 4 is a separately registered experiment. V1 public defaults stay frozen.
+STEP4_CONFIG = ROOT / 'experiments/praxis_step4_v1.toml'
+STEP4_PROTOCOL = ROOT / 'docs/PRAXIS_STEP4_PROTOCOL.md'
+STEP4_SOURCE = ROOT / 'experiments/praxis_step4_source.json'
+STEP4_NAMES = [f'P{i:02d}' for i in range(1, 11)]
+
+
+def step4_settings():
+    cfg = tomllib.loads(STEP4_CONFIG.read_text())
+    base = settings(DEFAULT_CONFIG)
+    if (cfg['id'] != 'praxis_step4_v1' or cfg['candidate_order'] != STEP4_NAMES + ['sma_cross']
+            or set(cfg['strategies']) != set(cfg['candidate_order'])
+            or cfg['variants_per_candidate'] != 1 or cfg['layers'] != 0
+            or cfg['execution'] != base['execution'] or cfg['account'] != base['account']
+            or cfg['strategies']['sma_cross'] != base['strategies']['sma_cross']):
+        raise ProbeError('Step 4 registry or unchanged baseline contract differs.')
+    return cfg
+
+
+def step4_source_hashes():
+    paths = sorted((ROOT/'src/mynyra').glob('*.py')) + sorted((ROOT/'scripts').glob('*.py')) + sorted((ROOT/'tests').glob('test_*.py'))
+    paths += [STEP4_CONFIG, STEP4_PROTOCOL, DEFAULT_CONFIG, PROTOCOL,
+              ROOT/'docs/PRAXIS_STEP1_CANDIDATES.md', ROOT/'requirements.lock',
+              ROOT/'pyproject.toml', ROOT/'sql/migrations/001_research_catalog.sql']
+    return {str(p.relative_to(ROOT)): archive_sha256(p) for p in paths}
+
+
+def step4_provenance():
+    import subprocess
+    expected = json.loads(STEP4_SOURCE.read_text())
+    current = step4_source_hashes()
+    if expected['source_hashes'] != current or expected['case_inventory_sha256'] != step4_inventory_hash(step4_settings()):
+        raise ProbeError('Numerical source differs from the Step 4 freeze.')
+    dirty = subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=ROOT,text=True)
+    if dirty.strip():
+        raise ProbeError('Commit tracked changes before running the frozen experiment.')
+    commit = subprocess.check_output(['git','log','-1','--format=%H','--',str(STEP4_SOURCE.relative_to(ROOT))],cwd=ROOT,text=True).strip()
+    if len(commit) != 40 or platform.python_version() != '3.11.14':
+        raise ProbeError('Committed freeze and Python 3.11.14 are required.')
+    return {'freeze_commit':commit, 'source_manifest_sha256':archive_sha256(STEP4_SOURCE),
+            'implementation_sha256':hashlib.sha256(json.dumps(current,sort_keys=True).encode()).hexdigest(),
+            'config_sha256':archive_sha256(STEP4_CONFIG),'protocol_sha256':archive_sha256(STEP4_PROTOCOL),
+            'source_hashes':current,'python':platform.python_version()}
+
+
+def step4_inputs(cfg):
+    evidence = cfg['evidence']
+    for key,value in evidence.items():
+        if not key.endswith('_path'):
+            continue
+        p = ROOT / value
+        if not p.is_file() or p.is_symlink() or archive_sha256(p) != evidence[key[:-5]+'_sha256']:
+            raise ProbeError('Frozen input, cost evidence or timezone identity differs.')
+        if value.startswith('.local/') and p.stat().st_mode & 0o077:
+            raise ProbeError('Step 4 private input is not owner-only.')
+    cutoff = utc(cfg['periods']['evaluation_start'])
+    path = ROOT/evidence['snapshot_path']
+    bars = read_normalized_minutes(path,cutoff)
+    if len(bars) != cfg['input_rows'] or archive_sha256(path) != cfg['input_sha256'] or bars[0].time != utc(cfg['periods']['development_start']) or bars[-1].time.isoformat() != '2026-03-31T23:59:00+00:00':
+        raise ProbeError('Frozen pre-April input bounds differ.')
+    return bars
+
+
+def step4_cases(cfg):
+    p,sel,ex = cfg['periods'],cfg['selection'],cfg['execution']
+    names = cfg['candidate_order']+['no_trade']
+    cases=[]
+    for period,start,end in [('development',p['development_start'],p['selection_start']),('selection',p['selection_start'],p['evaluation_start'])]:
+        cases.extend((period,n,c,v,utc(start),utc(end)) for n,c,v in itertools.product(names,scenarios(cfg),('signal','account')))
+    cost = Costs(D(sel['gate_spread']),D(sel['gate_slippage']),'mid',D(ex['commission_rate']),D(ex['tick']))
+    for start in p['selection_cohorts']:
+        cases.extend(('cohort_'+start[:10],n,cost,'account',utc(start),utc(p['evaluation_start'])) for n in names)
+    if len(cases) != cfg['expected_cases']:
+        raise ProbeError('Step 4 case budget differs.')
+    return cases
+
+
+def step4_inventory_hash(cfg):
+    cases = [(p,n,c.key,v,a.isoformat(),b.isoformat()) for p,n,c,v,a,b in step4_cases(cfg)]
+    return hashlib.sha256(json.dumps(cases,separators=(',',':')).encode()).hexdigest()
+
+
+def run_step4(output, cfg, prov):
+    import shutil
+    import time
+    from mynyra.strategies import expanded_decisions
+    output=private_path(output)
+    output.mkdir(mode=0o700,parents=True,exist_ok=False)
+    began=time.monotonic()
+    def resource_check():
+        if time.monotonic()-began > cfg['maximum_pass_seconds'] or shutil.disk_usage(output).free < cfg['minimum_free_bytes']:
+            raise ProbeError('Step 4 resource bound reached; preserve this incomplete attempt.')
+    resource_check()
+    bars=step4_inputs(cfg)
+    cases=step4_cases(cfg)
+    data={'input_sha256':cfg['input_sha256'],'loaded_prefix_rows':len(bars),
+          'loaded_last_timestamp':bars[-1].time.isoformat(),'access_class':'exploratory'}
+    save(output/'registration.json',{'experiment':cfg['id'],'provenance':prov,'data':data,'cases':[
+        {'period':p,'candidate':n,'scenario':c.key,'view':v,'start':a.isoformat(),'end':b.isoformat()}
+        for p,n,c,v,a,b in cases]})
+    sma=decisions(bars,settings(DEFAULT_CONFIG))['sma_cross']
+    entries=[]
+    last_period=None
+    for number,(period,name,cost,view,start,end) in enumerate(cases):
+        resource_check()
+        if period != last_period:
+            calculated=expanded_decisions(bars,cfg,start,sma)
+            last_period=period
+            resource_check()
+        filename=f'run_{number:04d}.json'
+        try:
+            result=simulate(bars,calculated[name],name,cfg,cost,view,start,end)
+            result['period']=period
+            # Identical baseline economics across experiments must not reuse an
+            # artifact hash at a different catalog path. Bind the experiment in
+            # the result envelope; v1 numerical artifacts remain unchanged.
+            result['experiment']=cfg['id']
+            save(output/filename,result)
+        except Exception as error:
+            save(output/'failure.json',{'status':'incomplete','case_number':number,
+                                       'error_type':type(error).__name__})
+            raise
+        entries.append({'file':filename,'sha256':archive_sha256(output/filename),
+                        'period':period,'candidate':name,'scenario':cost.key,'view':view})
+        if (number+1)%27==0 or number+1==len(cases):
+            print(json.dumps({'completed':number+1,'total':len(cases)}),flush=True)
+    if step4_provenance() != prov:
+        raise ProbeError('Source changed during the run; this attempt is incomplete.')
+    resource_check()
+    save(output/'index.json',{'provenance':prov,'data':data,'runs':entries,
+                             'registration_sha256':archive_sha256(output/'registration.json')})
+
+
+def step4_select(runs,cfg):
+    sel=cfg['selection']
+    primary='mid|0.58|0.15'
+    required=['mid|0.48|0.05','mid|0.58|0.05',primary,'bid|0.58|0.15','ask|0.58|0.15']
+    records=[]
+    for name in STEP4_NAMES:
+        failures=[]
+        for scenario,view in itertools.product(required,('signal','account')):
+            r=runs['selection',name,scenario,view]
+            if D(r['net'])<=0:
+                failures.append('nonpositive:'+scenario+':'+view)
+            if view=='account':
+                for k in ('failures','gap_held','unresolved_intrabar_floor'):
+                    if r['counts'].get(k,0): failures.append(k+':'+scenario)
+        sig,acc=(runs['selection',name,primary,v] for v in ('signal','account'))
+        if sig['trade_count']<sel['minimum_trades'] or sig['active_days']<sel['minimum_active_days']:
+            failures.append('insufficient_trades_or_days')
+        lower=lower_expectancy(sig['daily'],sel)
+        sensitivity=lower_expectancy(sig['daily'],{**sel,'bootstrap_block_days':sel['bootstrap_sensitivity_block_days']})
+        if lower<=0:failures.append('nonpositive_bootstrap_lower')
+        halves=[sum((D(v['net']) for day,v in sig['daily'].items() if (day<sel['first_half_end'])==first),D(0)) for first in (True,False)]
+        if min(halves)<=0:failures.append('nonpositive_march_half')
+        for start in cfg['periods']['selection_cohorts']:
+            r=runs['cohort_'+start[:10],name,primary,'account']
+            if any(r['counts'].get(k,0) for k in ('failures','gap_held','unresolved_intrabar_floor')):
+                failures.append('unsafe_cohort:'+start[:10])
+        rejected=any(f.startswith(('nonpositive:','failures:','gap_held:','unresolved_intrabar_floor:','unsafe_cohort:')) for f in failures)
+        records.append({'candidate':name,'classification':'rejected' if rejected else 'inconclusive' if failures else 'diagnostic_pass',
+                        'failed_gates':failures,'bootstrap_lower':str(lower),'ten_day_lower':str(sensitivity),
+                        'march_halves':[str(v) for v in halves],'ranking_net':acc['net'],
+                        'ranking_drawdown':acc['modeled_max_drawdown'],'ranking_turnover':acc['ounce_turnover']})
+    ranked=sorted((r for r in records if not r['failed_gates']),key=lambda r:(-D(r['ranking_net']),D(r['ranking_drawdown']),r['ranking_turnover'],r['candidate']))
+    return {'decisions':records,'research_priorities':[r['candidate'] for r in ranked[:sel['max_priorities']]],
+            'finalists':[],'evaluation':{'status':sel['evaluation_status'],'reason':sel['evaluation_reason']}}
+
+
+def step4_report(runs,cfg):
+    fields=('net','raw_gross','execution_drag','commission','swaps','trade_count','active_days',
+            'modeled_max_drawdown','ounce_turnover','counts','status','conditional_cost_budget_per_ounce')
+    rows=[]
+    for (period,name,scenario,view),r in runs.items():
+        rows.append({'period':period,'candidate':name,'scenario':scenario,'view':view,
+                     **{k:r[k] for k in fields},'stage_count':len(r['stage_completions'])})
+    relationships=[]
+    for a,b in itertools.combinations(cfg['candidate_order'],2):
+        x,y=(runs['selection',n,'mid|0.58|0.15','signal'] for n in (a,b))
+        days=sorted(set(x['daily'])|set(y['daily']))
+        dx=[D(x['daily'].get(d,{'net':0})['net']) for d in days]
+        dy=[D(y['daily'].get(d,{'net':0})['net']) for d in days]
+        mx,my=sum(dx)/len(days),sum(dy)/len(days)
+        vx,vy=sum((v-mx)**2 for v in dx),sum((v-my)**2 for v in dy)
+        corr=sum((u-mx)*(v-my) for u,v in zip(dx,dy))/(vx*vy).sqrt() if vx and vy else None
+        j=overlap=0
+        for t in x['trades']:
+            while j<len(y['trades']) and y['trades'][j]['exit_time']<=t['entry_time']:j+=1
+            if j<len(y['trades']) and y['trades'][j]['entry_time']<t['exit_time']:overlap+=1
+        keys=lambda r:{(t['entry_time'],t['direction']) for t in r['trades']}
+        relationships.append({'a':a,'b':b,'daily_correlation':corr,'a_trades_overlapping_b':overlap,
+                              'identical_entries':len(keys(x)&keys(y))})
+    sma=[]
+    for period in ('development','selection'):
+        sig,acc=(runs[period,'sma_cross','mid|0.58|0.15',v] for v in ('signal','account'))
+        keys=lambda r:{(t['entry_time'],t['direction']):t for t in r['trades']}
+        s,a=keys(sig),keys(acc)
+        removed=-sum((D(s[k]['net']) for k in s.keys()-a.keys()),D(0))
+        added=sum((D(a[k]['net'])/a[k]['ounces'] for k in a.keys()-s.keys()),D(0))
+        changed=sum((D(a[k]['net'])/a[k]['ounces']-D(s[k]['net']) for k in a.keys()&s.keys()),D(0))
+        sized=sum((D(t['net'])*(t['ounces']-1)/t['ounces'] for t in a.values()),D(0))
+        difference=D(acc['net'])-D(sig['net'])
+        if abs(removed+added+changed+sized-difference)>D('1e-18'):
+            raise ValueError('SMA attribution failed')
+        sma.append({'period':period,'account_minus_signal':difference,'remove_signal_only':removed,
+                    'add_account_only_one_ounce':added,'change_shared_exits':changed,'additional_ounces':sized})
+    return {'rows':rows,'relationships':relationships,'sma_attribution':sma}

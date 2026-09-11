@@ -17,9 +17,11 @@ def equal(actual, expected):
         raise ValueError("Evidence accounting mismatch")
 
 
-def audit(folder, replay=None):
-    cfg = settings(DEFAULT_CONFIG)
-    index, runs = load_runs(folder, provenance(DEFAULT_CONFIG), screen_cases(cfg))
+def audit(folder, replay=None, cfg=None, prov=None, cases=None):
+    cfg = cfg or settings(DEFAULT_CONFIG)
+    prov = prov or provenance(DEFAULT_CONFIG)
+    cases = cases or screen_cases(cfg)
+    index, runs = load_runs(folder, prov, cases)
     total_trades = 0
     for (_, name, _, view), run in runs.items():
         trades = run["trades"]
@@ -66,7 +68,7 @@ def audit(folder, replay=None):
                          "nonoverlapping_positions", "stage_balance_resets", "no_trade_baseline"],
               "index_sha256": archive_sha256(folder / "index.json")}
     if replay is not None:
-        replay_index, _ = load_runs(replay, provenance(DEFAULT_CONFIG), screen_cases(cfg))
+        replay_index, _ = load_runs(replay, prov, cases)
         if index != replay_index:
             raise ValueError("Independent replay index differs")
         result["replay_index_sha256"] = archive_sha256(replay / "index.json")
