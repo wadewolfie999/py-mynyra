@@ -11,6 +11,12 @@ autonomous trading. The implemented system is currently limited to read-only
 cTrader demo inspection, private market-data capture, Faraz archive audit and UTC
 normalization, reproducible data validation, and offline historical simulation.
 
+Praxis Step 4 has completed its expanded exploratory batch: all ten additional
+candidates failed economic gates and no finalist advanced. Read
+`docs/PRAXIS_STEP4.md`, `docs/PRAXIS_STEP4_PROTOCOL.md` and
+`docs/PRAXIS_STEP4_FREEZE.md` before further strategy work. January–March has
+already informed research; April remains sealed. No new batch is implied.
+
 The first source-backed comparison of five distinct XAUUSD M1 candidates produced
 no finalists. Read `docs/XAUUSD_COMPARISON_REPORT.md`, the registered protocol and
 `docs/COMPARISON_WORKFLOW.md` before further strategy work. April remains sealed.

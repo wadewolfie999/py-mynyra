@@ -90,3 +90,16 @@ material missing authority or unavailable inputs must be surfaced explicitly.
 Preserve private data under ignored owner-only `.local/`. No orders, trading-scope
 changes, spending, live quote capture or shadow campaign are authorized by locking
 this sequence. The existing five-candidate report and frozen evidence remain intact.
+
+
+## Step 4 completed — exploratory fallback
+
+The [expanded report](PRAXIS_STEP4.md) completes this sequence's fourth gate:
+P01–P10 plus unchanged SMA/no-trade, all 1,344 cases and a full matching replay,
+111 passing tests, independent accounting, and isolated recovery. All ten new
+candidates failed economic gates; the advancement freeze is empty. January–March
+remains exploratory and April remains sealed. The separate SMA attribution is
+reproduced without a new filter. The first metadata-defective attempt is retained
+and documented; the corrected freeze preceded the complete fresh batch.
+
+There is no automatically authorized fifth step, acquisition, evaluation or order.
