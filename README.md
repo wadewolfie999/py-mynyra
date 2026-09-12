@@ -7,6 +7,10 @@ The economic objective and the software milestones are recorded separately in th
 This Python project starts from this repository's own source and the supplied
 canonical problem specification.
 
+## Project definition and operating model
+
+The [canonical problem specification](docs/03-Mynyra_Real_Problem_Specification_CANONICAL.md) governs Mynyra’s economic objective. The [project definition, business goals and management/MCP specification](docs/PROJECT_CANONICAL.md) is the approved operating design. It preserves the current Step 4 no-advancement decision and does not authorize a new campaign, sealed-data access, spending, broker operations or orders.
+
 The first increments provide bounded, read-only cTrader checks plus a private,
 validated market-data preparation path:
 
