@@ -1,4 +1,4 @@
-# Verification evidence — updated 2026-09-04
+# Verification evidence — updated 2026-09-17
 
 Source: `wadewolfie999/py-mynyra`. Initial repository state and connection work are
 recorded in earlier Git history. This document reports the evidence available for
@@ -111,6 +111,35 @@ change was made after historical results. April was not consumed for a forced
 winner. Untested parameter neighborhoods, limited market regimes, unknown quote
 paths, later-period cost evidence and actual fills remain material limitations.
 
+## Bigi workstation cTrader validation — 2026-09-07
+
+This historical validation ran on
+`codex/bigi-ctrader-connection-validation`, created from the then-current
+`origin/main` revision
+`373f6068db872fe7a389a0ac540528e5197a3e38`. The workstation was macOS
+26.6.1/arm64 with Homebrew Python 3.11.16. It establishes compatibility evidence
+for that Mac, not exact Python 3.11.14 ASUS parity.
+
+| Check | Observed result | Scope |
+| --- | --- | --- |
+| Locked installation | Requirements and editable package installed; dependency check passed | Locked dependencies were internally consistent in the checked Python 3.11.16 environment |
+| Compilation | Source, tests, and scripts compiled | Syntax/importability check, not provider proof |
+| Full offline gate | 83 tests passed | Probe, market, dataset, experiment, SMA diagnostic, benchmark, catalog, and Praxis Step 3 behavior passed locally |
+| Demo TLS | PASS, 2026-09-07 17:42:45 UTC; TLS 1.3 | Certificate-verified connection to the fixed demo endpoint |
+| Application authentication | PASS, 2026-09-07 17:42:46 UTC | Demo API accepted the private application credentials |
+| Demo account read | PASS, 2026-09-07 17:45:36 UTC; USD, 60 symbols, accounts scope | Exact account mapping, API-confirmed demo status, view-only authentication, currency, and symbol-list reads |
+| Private-state boundary | Credential and complete account-result files were owner-only, ignored, and untracked | Credentials, account identifiers, balances, and raw provider payloads remained outside Git |
+
+The first account attempt failed closed before account selection because the API
+did not explicitly report view-only scope. After a separately authorized token
+replacement, the repeated TLS, application, and account checks passed. No token
+refresh or rewrite was performed by the validation command itself.
+
+These results prove bounded read-only access to one API-confirmed demo account.
+They do not prove profitability, order readiness, token recovery, reconnect
+behavior, unattended operation, live-account safety, or authority to trade. No
+order, market/quote capture, historical experiment, trading-scope change,
+deployment, or release occurred during this validation.
 
 ## Praxis Step 4 verification
 
@@ -135,3 +164,23 @@ experiment-identity correction changed no economic rule and preceded performance
 inspection. No network/account checks were necessary for this offline increment;
 no order, scope change, spending, capture or shadow campaign occurred. The evidence
 supports an exploratory negative screen, not independent or executable profitability.
+
+## Repository reconciliation verification — 2026-09-17
+
+This evidence applies to the unmerged reconciliation candidate based on
+`origin/main` commit `8d5081131af3b88cb45f554a2d730d7108ca8ddb`. It proves
+repository and local-adapter behavior only; it does not renew any historical
+broker, private-data, strategy, provider, payout, or authorization claim.
+
+| Check | Result | Scope |
+| --- | --- | --- |
+| Core regression gate | 97 tests passed | Public-state reader plus probe, market, dataset, experiment, and simulation behavior; no credentialed network call |
+| Repository public-state check | Consistent bounded snapshot; all indexed file sources and inventory records current | The resolver read only direct public records and reported no inventory drift |
+| Core dependencies and syntax | `pip check`, `compileall`, and whitespace checks passed | Existing core environment remained independent of MCP dependencies |
+| Optional MCP installation | Path-free lock installed in a clean Python 3.11 environment | Exact optional MCP/transitive pins and the editable repository package were internally consistent |
+| Optional MCP transport | 4 tests passed | Real stdio initialization, exactly one zero-input tool, successful state read, argument rejection, and generic unavailable behavior for an unsafe index |
+| Private Faraz validation | Not rerun | This integration worktree did not contain the pre-existing private normalized dataset; no private data was copied to run an unrelated gate |
+
+No cTrader credential, account, network, provider, payment, order, scope-change,
+or raw-data action occurred for this reconciliation. Review and merge remain
+required before the repository becomes the shared authoritative state.

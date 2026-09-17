@@ -223,3 +223,6 @@ __marimo__/
 .env.*
 !.env.example
 credentials*.json
+
+# Codex per-worktree environment metadata
+.codex/

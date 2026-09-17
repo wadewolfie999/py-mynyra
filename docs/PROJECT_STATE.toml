@@ -1,0 +1,441 @@
+# ACTIVE INDEX — reviewed, public-safe Py-Mynyra project briefing.
+#
+# This is the repository-owned active briefing index. It supersedes the earlier
+# split working-copy arrangement after the reconciliation review is merged.
+#
+# This projection is not an authority, a source-body reader, a semantic truth
+# validator, a command surface, or a live authorization grant.  The referenced
+# documents own their detailed facts and decisions.  Regenerate and review this
+# index through the normal source-and-index closeout workflow after a material
+# source, decision, or coverage change.
+
+schema_version = 1
+project_id = "py-mynyra"
+limitations = [
+  "This is a curated public briefing index, not complete project history.",
+  "Private artifacts, .local, account data, credentials, sealed data, catalog contents, and arbitrary conversations are outside this reader.",
+  "A recorded action or approval is not a present authorization grant, and a recorded running state is not proof of a live process.",
+  "Matching source hashes check reviewed byte identity; they do not validate the index paraphrases or establish coverage of uninspected records.",
+  "A consistent snapshot means two bounded working-file collections agreed; it is not an atomic filesystem transaction or an immutable Git-blob read.",
+  "The baseline identifier is a reviewed indexed reference, not a live local or remote Git revision check.",
+  "Runtime file access is limited to direct public .md, .toml, and .json records in docs/ and experiments/; hidden paths, subdirectories, symbolic links, and multiply linked files are excluded. Public-file and index contents still require editorial review.",
+  "The repository contains the reader and optional local adapter, but their presence does not prove host registration, shared operation, time savings, or a current remote Git revision.",
+]
+
+[coverage]
+status = "partial"
+# Focused wording/source review; this does not renew the uninspected contexts below.
+reviewed_at = "2026-09-17T00:00:00Z"
+reviewed_shared_baseline = "8d5081131af3b88cb45f554a2d730d7108ca8ddb"
+remote_freshness = "not_checked"
+uninspected_contexts = [
+  "Conversations other than the specifically selected task records",
+  "Private owner-constraint records and other .local state",
+  "The normal ASUS execution machine and the Mac simulation environment",
+  "Remote GitHub freshness after the reviewed shared baseline",
+]
+
+[inventory]
+# Discovery reads file names and metadata/hashes only below these public roots;
+# it never opens arbitrary record bodies to manufacture new claims.
+roots = ["docs", "experiments"]
+ignored = ["docs/PROJECT_STATE.toml"]
+
+[[sources]]
+id = "canonical_problem"
+path = "docs/03-Mynyra_Real_Problem_Specification_CANONICAL.md"
+location = "docs/03-Mynyra_Real_Problem_Specification_CANONICAL.md"
+section = "§§1–2, §6, §10, §12"
+publication_status = "published_shared_baseline"
+reviewed_sha256 = "32c2cf72eab4132337c302ef93bb073f24ad2051bc0106b72d04392bf5d3fb29"
+
+[[sources]]
+id = "project_canonical"
+path = "docs/PROJECT_CANONICAL.md"
+location = "docs/PROJECT_CANONICAL.md"
+section = "§§1.1–1.6, §3.4–3.5, §4.1–4.4, §5.1, §6"
+publication_status = "published_shared_baseline"
+reviewed_sha256 = "9a89e7a55eced90ba34f547df1012d649661dfdcab5c618383c6ce99013dca3d"
+
+[[sources]]
+id = "xauusd_comparison_report"
+path = "docs/XAUUSD_COMPARISON_REPORT.md"
+location = "docs/XAUUSD_COMPARISON_REPORT.md"
+section = "Decision; March comparison; Reproduction and remaining work"
+publication_status = "published_campaign_record"
+reviewed_sha256 = "7fe332eea67a7af883bba35ed78262e03c4e491dc06c89a793e4c69c7039c6c4"
+
+[[sources]]
+id = "xauusd_finalist_freeze"
+path = "docs/XAUUSD_FINALIST_FREEZE.md"
+location = "docs/XAUUSD_FINALIST_FREEZE.md"
+section = "Temporal and content evidence"
+publication_status = "published_campaign_freeze"
+reviewed_sha256 = "ab31a1e447cc2bb6b45b1c4b027c7842852b42fc9a458ac1a8d1fb7d86703050"
+
+[[sources]]
+id = "praxis_step4_report"
+path = "docs/PRAXIS_STEP4.md"
+location = "docs/PRAXIS_STEP4.md"
+section = "Temporal freeze and completed proof; Every diagnostic decision; Limits and reproducibility"
+publication_status = "published_campaign_record"
+reviewed_sha256 = "4ed4ddffcc0d159d42863944643037ef34bae51c1d2bf0f0526e964360d51897"
+
+[[sources]]
+id = "praxis_step4_protocol"
+path = "docs/PRAXIS_STEP4_PROTOCOL.md"
+location = "docs/PRAXIS_STEP4_PROTOCOL.md"
+section = "Data, partitions and fixed inventory; Diagnostic gates and evaluation prohibition"
+publication_status = "published_campaign_protocol"
+reviewed_sha256 = "884f2282923779cf9b9f4280be54c1cb84214ee6f8647b523d4f5a7389847c03"
+
+[[sources]]
+id = "praxis_step4_freeze"
+path = "docs/PRAXIS_STEP4_FREEZE.md"
+location = "docs/PRAXIS_STEP4_FREEZE.md"
+section = "Entire record"
+publication_status = "published_campaign_freeze"
+reviewed_sha256 = "9cecd67f5f4773fbdcedb971b86ece5629dcf9d0b39f470d05b86cd9188f648b"
+
+[[sources]]
+id = "route_b_working_overlay"
+path = "docs/WP_P1_ROUTE_001.md"
+location = "docs/WP_P1_ROUTE_001.md"
+section = "§§6–8"
+publication_status = "reviewed_public_working_record"
+reviewed_sha256 = "f57ae38e840d99fd9d00da9ed82284eb87b0a1a039872d8a5e08906c046be339"
+
+[[sources]]
+id = "p2_working_overlay"
+path = "docs/WP_P2_ECON_001.md"
+location = "docs/WP_P2_ECON_001.md"
+section = "Owner constraints and privacy; Bounded assessment method; State and next action"
+publication_status = "reviewed_public_working_record"
+reviewed_sha256 = "8b5e6033bc988aac9a1f983b8b55d5994595b4635a7c22e7d93b4169dd7b310c"
+
+[[sources]]
+id = "p2_provider_screen"
+path = "docs/WP_P2_PROVIDER_SCREEN.md"
+location = "docs/WP_P2_PROVIDER_SCREEN.md"
+section = "Scope and disposition; Results; Official evidence; Recommended next action"
+publication_status = "reviewed_public_working_record"
+reviewed_sha256 = "0490c3646a30b2b6b5f261a14c375e774ac15b79c82b09fc85ecdf4e71e03bb8"
+
+[[sources]]
+id = "execution_roadmap_working_baseline"
+path = "docs/EXECUTION_ROADMAP_BASELINE.md"
+location = "docs/EXECUTION_ROADMAP_BASELINE.md"
+section = "§§1–2, §3 P1–P2 and P6–P8, §§4–8"
+publication_status = "reviewed_public_working_record"
+reviewed_sha256 = "c285345e26a7afb9a53d5736987eca437135383ec054d5cf1e328c33ca6a0318"
+
+[[sources]]
+id = "briefing_workflow"
+path = "docs/PROJECT_STATE_WORKFLOW.md"
+location = "docs/PROJECT_STATE_WORKFLOW.md"
+section = "Entire record"
+publication_status = "reviewed_public_working_record"
+reviewed_sha256 = "baa3c9ba1e359bf96edf7f03949731e3267abb6321626b50df56b9d375b963d5"
+
+[[sources]]
+id = "mcp_implementation_assignment"
+location = "Codex task 01a0a40e-3764-7252-bcfe-580dbd55f236 (Implement Py-Mynyra project briefing); design task 01a0a36f-a305-7192-b24d-7a04fbb95ece; subsequent acceptance review in task 01a0a2e1-8cc1-7de2-b1a1-185b9751e0f3"
+section = "Original implementation assignment and completed implementation handoff; not a current instruction to rebuild"
+publication_status = "task_assignment"
+runtime_status = "not_checked"
+
+[[sources]]
+id = "owner_workflow_priority"
+location = "Codex task 01a0a36f-a305-7192-b24d-7a04fbb95ece, 2026-09-15: owner selected a combination of options 3 and 2, emphasized practical cash results, and said proceed to the focused briefing correction and next-task selection"
+section = "Owner priority and approved immediate scope; broader MCP benefit remains to be assessed through actual use"
+publication_status = "task_assignment"
+runtime_status = "not_checked"
+
+[[sources]]
+id = "mcp_acceptance_review"
+path = "docs/PROJECT_STATE_MCP_PILOT.md"
+location = "docs/PROJECT_STATE_MCP_PILOT.md"
+section = "Implementation disposition, verification, fresh-session demonstration and remaining integration limits"
+publication_status = "reviewed_public_working_record"
+reviewed_sha256 = "83816cf262bbe2dbe1c71c2a60a2053b4a2e8afbf0362f23f28b9a9eee745caf"
+
+[[sources]]
+id = "repository_reconciliation"
+path = "docs/REPOSITORY_RECONCILIATION_2026-09-17.md"
+location = "docs/REPOSITORY_RECONCILIATION_2026-09-17.md"
+section = "Entire record"
+publication_status = "reviewed_public_working_record"
+reviewed_sha256 = "fe8b2efc77d61920e65d18e58e2b9c583c7ec793c2078a10d747a56540fa3c15"
+
+[[claims]]
+id = "project-purpose-and-boundary"
+briefing_section = "project_direction"
+layer = "shared_baseline"
+topic = "project_direction"
+position = "recoverable_evidence_driven_path"
+statement = "The recorded objective is to reach a financially self-sustaining state through repeatable cash actually received, while keeping failure survivable. Python trading development, research and MCP support serve that objective; finishing the software is not the end goal or evidence of income. cTrader remains demo-only and view-only, with no order-placement path authorized."
+sources = ["canonical_problem", "project_canonical"]
+
+[[claims]]
+id = "current_market-and-research-boundary"
+briefing_section = "project_direction"
+layer = "shared_baseline"
+statement = "XAUUSD/M1 remains the recorded starting market. A new strategy campaign requires a distinct registered protocol and an admissible independent-evaluation path; no campaign starts automatically from this briefing."
+sources = ["project_canonical", "praxis_step4_protocol"]
+
+[[claims]]
+id = "first-comparison-closeout"
+briefing_section = "relevant_history"
+layer = "shared_baseline"
+statement = "The first five-candidate XAUUSD/M1 comparison produced no March finalists. Its April evaluation period was not opened and remains sealed; this is negative screening evidence, not proof of profitability or of a viable economic route."
+sources = ["xauusd_comparison_report", "xauusd_finalist_freeze"]
+
+[[claims]]
+id = "praxis-step4-closeout"
+briefing_section = "relevant_history"
+layer = "shared_baseline"
+statement = "Praxis Step 4 screened ten additional candidates. All failed the economic gates, no finalist advanced, and the protocol prohibited advancement or evaluation regardless of the screen outcome because suitable independent data was unavailable. Together with the first comparison, the two completed campaigns cover fifteen unique strategies; repeated SMA/no-trade cases were deliberate baselines rather than extra strategies."
+sources = ["praxis_step4_report", "praxis_step4_protocol", "praxis_step4_freeze"]
+
+[[claims]]
+id = "research-restriction"
+briefing_section = "important_uncertainty"
+layer = "shared_baseline"
+statement = "Independent evaluation for the Step 4 exploration remains unavailable under that campaign's contract. The completed campaign records do not authorize a new strategy batch, sealed-data inspection, shadow operation, broker activity, or a new economic attempt."
+sources = ["praxis_step4_protocol", "praxis_step4_freeze", "project_canonical"]
+
+[[claims]]
+id = "route-b-recorded-working-state"
+briefing_section = "unfinished_work"
+layer = "working_observation"
+topic = "economic_route_work_package"
+position = "first_provider_screen_complete_route_unresolved"
+recorded_at = "2026-09-15T20:20:00Z"
+statement = "Route B is approved. WP-P2 readiness reconciliation and the first bounded three-product public screen are complete. FTMO Challenge 2-Step and The5ers High Stakes failed operator eligibility; FundedNext Stellar 2-Step on MT5 remains unresolved because the applicable TC Pay receipt path, current implementation fit, strategy fit and private exposure limits are not established. No provider or purchase is approved."
+sources = ["route_b_working_overlay", "p2_working_overlay", "p2_provider_screen"]
+
+[[claims]]
+id = "first-provider-screen-result"
+briefing_section = "relevant_history"
+layer = "working_observation"
+statement = "The 2026-09-15 zero-spend screen reviewed exactly three products in under the 60-minute bound using official public sources. Two were rejected at the eligibility gate; one remained unresolved. The result establishes neither profitability nor payout receipt and did not involve accounts, contact, payment, permission changes, or orders."
+sources = ["p2_provider_screen"]
+
+[[claims]]
+id = "p2-unresolved-exposure-limits"
+briefing_section = "important_uncertainty"
+layer = "working_observation"
+statement = "The reconciliation and first screen must not be restarted, but final loss, funding, attempt and STOP limits remain provisional or unresolved. FundedNext's jurisdiction-specific TC Pay receipt path and the MT5 integration path also remain unverified. These gaps block any purchase, exposure-dependent recommendation, or economic-attempt decision. Keep exact private values out of this public briefing."
+sources = ["p2_working_overlay", "p2_provider_screen"]
+
+[[claims]]
+id = "current-owner-next-action"
+briefing_section = "recorded_next_action"
+layer = "current_assignment"
+label = "Owner-approved immediate scope"
+statement = "Do not widen the provider list. The next proposed step is one bounded official-public-evidence check of whether FundedNext's applicable TC Pay route can deliver usable cash through a channel the owner can legitimately access, without account creation, login or provider contact."
+sources = ["p2_working_overlay", "p2_provider_screen"]
+
+[[claims]]
+id = "reconciliation-recommendation"
+briefing_section = "recommendation"
+layer = "current_assignment"
+label = "Recommendation only"
+statement = "Recommended next action: resolve the FundedNext TC Pay receipt-path question through official public evidence only. Reject the product if usable receipt cannot be supported without login or contact. Even if supported, settle the private exposure/attempt/STOP contract and establish a viable strategy before any purchase or implementation decision."
+sources = ["execution_roadmap_working_baseline", "p2_working_overlay", "p2_provider_screen"]
+
+[[claims]]
+id = "current-mcp-assignment"
+briefing_section = "current_assignment"
+layer = "current_assignment"
+statement = "The repository reconciliation candidate contains the public-state reader, active index, and one-tool optional local adapter. Historical local fresh-session checks are recorded, but host registration and workflow benefit must be revalidated from the canonical checkout after merge."
+sources = ["owner_workflow_priority", "mcp_acceptance_review", "repository_reconciliation"]
+
+[[claims]]
+id = "mcp-use-and-integration-gap"
+briefing_section = "unfinished_work"
+layer = "working_observation"
+statement = "The pilot remains one local read-only tool with no model arguments. Historical isolated sessions recovered the intended context, but the observations do not establish time savings, shared operation, a background service, or justification for another MCP capability."
+sources = ["mcp_acceptance_review", "briefing_workflow"]
+
+[[claims]]
+id = "repository-reconciliation"
+briefing_section = "relevant_history"
+layer = "working_observation"
+statement = "The 2026-09-17 reconciliation candidate consolidates reviewed public state from fragmented local worktrees into a GitHub-reviewable branch. GitHub main becomes the durable shared authority only after that branch is reviewed and merged; private artifacts and excluded historical working copies remain outside the index."
+sources = ["repository_reconciliation"]
+
+[[claims]]
+id = "proof-and-coverage-limits"
+briefing_section = "important_uncertainty"
+layer = "shared_baseline"
+statement = "The briefing reads reviewed public records only. Reported private evidence is report-read rather than independently reverified here; public source consistency does not establish coverage of newer conversations, machines, private state, or remote revisions."
+sources = ["project_canonical", "praxis_step4_report"]
+
+[[inventory.records]]
+path = "docs/03-Mynyra_Real_Problem_Specification_CANONICAL.md"
+sha256 = "32c2cf72eab4132337c302ef93bb073f24ad2051bc0106b72d04392bf5d3fb29"
+
+[[inventory.records]]
+path = "docs/ASUS_ENVIRONMENT.md"
+sha256 = "a3ed0272e1ed3bc1bc1651470536c0bcb06c26071b464df6bd38a8c062d24b19"
+
+[[inventory.records]]
+path = "docs/ASUS_WORKING_CONTEXT.md"
+sha256 = "2dd8cb9a9a20fab7c188a9cdcac2c73a641ac6275e3b92d59e5a9e71865e0121"
+
+[[inventory.records]]
+path = "docs/COMPARISON_WORKFLOW.md"
+sha256 = "f38938f62de85219061671aa69fb7b2b823b5ee6873a3aab532badb8381a91f3"
+
+[[inventory.records]]
+path = "docs/DATA_READINESS_REPORT.md"
+sha256 = "7cce3b29007004c93bcbc3cadb9ea10103e9d97b159596fa5894bd3bf8d969d0"
+
+[[inventory.records]]
+path = "docs/DEMO_SCENARIO.md"
+sha256 = "aead4b51ab6fd5f162d6a138082f89b6d74dd53f493ff22b0f7e5eec181b1485"
+
+[[inventory.records]]
+path = "docs/EXECUTION_ROADMAP_BASELINE.md"
+sha256 = "c285345e26a7afb9a53d5736987eca437135383ec054d5cf1e328c33ca6a0318"
+
+[[inventory.records]]
+path = "docs/FARAZ_DATA_AUDIT.md"
+sha256 = "836873ed15bc1c5d226fd8d3de4501c932c0103ad741d4fd9678b29321d891b3"
+
+[[inventory.records]]
+path = "docs/IMPLEMENTATION_PLAN.md"
+sha256 = "7d716442ab1be225574cbd98a653603b81a259ff204c6f68030bed68c2117c54"
+
+[[inventory.records]]
+path = "docs/MARKET_DATA.md"
+sha256 = "a6124c9790bfc166c26e3350d950716736ff01f125a20df8c86380a11a74aa7d"
+
+[[inventory.records]]
+path = "docs/PRAXIS.md"
+sha256 = "ee5bb9e3252f2b76f8238834746c71ee84fa5bb0991b1261d5500a151498e828"
+
+[[inventory.records]]
+path = "docs/PRAXIS_STEP1.md"
+sha256 = "895618398ba3bf447c7b3d23e744352f3229f6ad2dbc27f6b80d32e016ba8c1f"
+
+[[inventory.records]]
+path = "docs/PRAXIS_STEP1_CANDIDATES.md"
+sha256 = "0813b6383fccdf8190e344dcd2d9fd00b2ce08719a0fa31fdaf9b9b9ff840539"
+
+[[inventory.records]]
+path = "docs/PRAXIS_STEP1_DATA.md"
+sha256 = "fece82b1adab41ed963e0efb434ba2bd8bef664d542b6d22acd8b3d1b6d23815"
+
+[[inventory.records]]
+path = "docs/PRAXIS_STEP1_SMA.md"
+sha256 = "2517c4c3fbe9cc9119bf05ba9a0fc326f646e6b42a648e348b39338fdaa9ccbf"
+
+[[inventory.records]]
+path = "docs/PRAXIS_STEP2.md"
+sha256 = "6f03e636f76127d4057c4d59b7b4bef81ef709e8794f4ab0aae67b7a8ccd4356"
+
+[[inventory.records]]
+path = "docs/PRAXIS_STEP3.md"
+sha256 = "c2b18476d9fb47e06ef19c05f341c1443035056c2cb6ed5cf27d6b05d0d29914"
+
+[[inventory.records]]
+path = "docs/PRAXIS_STEP4.md"
+sha256 = "4ed4ddffcc0d159d42863944643037ef34bae51c1d2bf0f0526e964360d51897"
+
+[[inventory.records]]
+path = "docs/PRAXIS_STEP4_CORRECTIONS.md"
+sha256 = "5f997872cb7673d07c87f58667aea2f75114204d398eb3d05d8844b96cfeaa29"
+
+[[inventory.records]]
+path = "docs/PRAXIS_STEP4_FREEZE.md"
+sha256 = "9cecd67f5f4773fbdcedb971b86ece5629dcf9d0b39f470d05b86cd9188f648b"
+
+[[inventory.records]]
+path = "docs/PRAXIS_STEP4_PROTOCOL.md"
+sha256 = "884f2282923779cf9b9f4280be54c1cb84214ee6f8647b523d4f5a7389847c03"
+
+[[inventory.records]]
+path = "docs/PRAXIS_STEP4_RECOVERY.md"
+sha256 = "aff566f6fbcb33354d711dff9bb1a9668a3e22556735fa9a2248a15feb6da115"
+
+[[inventory.records]]
+path = "docs/PROJECT_CANONICAL.md"
+sha256 = "9a89e7a55eced90ba34f547df1012d649661dfdcab5c618383c6ce99013dca3d"
+
+[[inventory.records]]
+path = "docs/PROJECT_STATE_MCP_PILOT.md"
+sha256 = "83816cf262bbe2dbe1c71c2a60a2053b4a2e8afbf0362f23f28b9a9eee745caf"
+
+[[inventory.records]]
+path = "docs/PROJECT_STATE_WORKFLOW.md"
+sha256 = "baa3c9ba1e359bf96edf7f03949731e3267abb6321626b50df56b9d375b963d5"
+
+[[inventory.records]]
+path = "docs/REPOSITORY_RECONCILIATION_2026-09-17.md"
+sha256 = "fe8b2efc77d61920e65d18e58e2b9c583c7ec793c2078a10d747a56540fa3c15"
+
+[[inventory.records]]
+path = "docs/RESEARCH_EXPANSION_SEQUENCE.md"
+sha256 = "598a3d81e53196e938e3f85cf3a5194ed62788f5ddcdada48765cd66ea522240"
+
+[[inventory.records]]
+path = "docs/STRATEGY_RESEARCH_PLAN.md"
+sha256 = "ed2a67f77c151d32bde56b901a4484f45553ac4e81e8f3f3831d3a5fcb9e78e6"
+
+[[inventory.records]]
+path = "docs/VERIFICATION.md"
+sha256 = "6c75b149511b0f297b324cb3ab45c34d4c31465aa0dc0814e72daa45838d5e64"
+
+[[inventory.records]]
+path = "docs/WORLDMAP.md"
+sha256 = "bc156c3e06f371c1f501af5adc3b9c8f1bf987da5f8610b1ca17533416783a96"
+
+[[inventory.records]]
+path = "docs/WP_P1_ROUTE_001.md"
+sha256 = "f57ae38e840d99fd9d00da9ed82284eb87b0a1a039872d8a5e08906c046be339"
+
+[[inventory.records]]
+path = "docs/WP_P2_ECON_001.md"
+sha256 = "8b5e6033bc988aac9a1f983b8b55d5994595b4635a7c22e7d93b4169dd7b310c"
+
+[[inventory.records]]
+path = "docs/WP_P2_PROVIDER_SCREEN.md"
+sha256 = "0490c3646a30b2b6b5f261a14c375e774ac15b79c82b09fc85ecdf4e71e03bb8"
+
+[[inventory.records]]
+path = "docs/XAUUSD_COMPARISON_PROTOCOL.md"
+sha256 = "0bdad5d75a88c46ab2b26ecdc8ed5dff7e5257f00f205f16121f8835006d86bf"
+
+[[inventory.records]]
+path = "docs/XAUUSD_COMPARISON_REPORT.md"
+sha256 = "7fe332eea67a7af883bba35ed78262e03c4e491dc06c89a793e4c69c7039c6c4"
+
+[[inventory.records]]
+path = "docs/XAUUSD_FINALIST_FREEZE.md"
+sha256 = "ab31a1e447cc2bb6b45b1c4b027c7842852b42fc9a458ac1a8d1fb7d86703050"
+
+[[inventory.records]]
+path = "docs/XAUUSD_LOCAL_COMMITS.json"
+sha256 = "dbd407ac66ec779933e59ea30e1b7bd0f66b38367dd79c40ff93129ebfd98291"
+
+[[inventory.records]]
+path = "docs/XAUUSD_PR_BODY.md"
+sha256 = "2ee91892edddfe08e125d208253a208a51b05db0feb9a4f7539fcaa8e6429a47"
+
+[[inventory.records]]
+path = "docs/XAUUSD_PUBLICATION.md"
+sha256 = "259f34b48ea11a55dd83c05de65fd8a17fe8280b18c386e4f03c58782da65947"
+
+[[inventory.records]]
+path = "experiments/praxis_step4_source.json"
+sha256 = "f9f2def39c818ba1f2f5f0d5c70d8289e6ac215e0f89a643bf8ec6d9f2b148e7"
+
+[[inventory.records]]
+path = "experiments/praxis_step4_v1.toml"
+sha256 = "c29a56796da2f7441bb07a658a41ca19113c3aca710dc4c2c689f75c90bb5a48"
+
+[[inventory.records]]
+path = "experiments/xauusd_m1_v1.toml"
+sha256 = "26880725fa66c4cf5d7ec03d60ef9f7891b5789f1384b0c07c890be064f54f6c"
