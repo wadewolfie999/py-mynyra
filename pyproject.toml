@@ -13,8 +13,15 @@ dependencies = [
     "service-identity==24.2.0",
 ]
 
+[project.optional-dependencies]
+mcp = [
+    "mcp==2.2.0",
+]
+
 [project.scripts]
 mynyra = "mynyra.cli:main"
+mynyra-project-state = "mynyra.project_state:main"
+py-myn-mcp = "mynyra.mcp_server:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

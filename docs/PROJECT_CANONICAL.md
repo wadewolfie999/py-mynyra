@@ -1,13 +1,19 @@
 # Mynyra / py-mynyra — Canonical Project Specification
 
-**Version:** 1.1<br>
+**Version:** 1.2<br>
 **Prepared:** 2026-09-11 UTC<br>
-**Revised:** 2026-09-11 UTC<br>
+**Revised:** 2026-09-17 UTC<br>
 **Intended repository path:** `docs/PROJECT_CANONICAL.md`<br>
 **Repository:** [wadewolfie999/py-mynyra](https://github.com/wadewolfie999/py-mynyra)<br>
 **Document role:** consolidated project definition, business goals, management requirements and MCP implementation specification.<br>
-**Publication/adoption status:** owner approved the recommendation to adopt this operating specification with the four review corrections, stating “recommendation is approved. proceed”. Those corrections are incorporated in version 1.1. Repository adoption on `main` remains pending; no merge is claimed.<br>
-**Implementation status:** management and MCP requirements below specify the target behavior; they do not claim a server, integration or automation is running.
+**Publication/adoption status:** version 1.1 was adopted through PR #13, merged to
+`main` at `8d5081131af3b88cb45f554a2d730d7108ca8ddb`. Version 1.2 records the
+repository-reconciliation candidate; its additions become shared state only when
+their reviewed pull request is merged.<br>
+**Implementation status:** the public-state resolver and a one-tool local stdio
+pilot are repository candidates in version 1.2. The broader management/MCP design
+below remains specified work, not a claim of shared-service deployment,
+automation, or action authority.
 
 **Contents:** [Project definition](#1-project-definition) · [Business goals](#2-business-goals-and-evidence-of-success) · [Project management](#3-project-management-operating-model) · [MCP implementation](#4-project-management-implementation-through-mcp) · [Delivery and acceptance](#5-implementation-work-packages-and-acceptance).
 
@@ -202,6 +208,12 @@ Compare saved handling effort against build, review, maintenance, failure-recove
 
 **Specified design:** provide a small project-state service that lets authorized AI clients read the same current decisions, evidence references, restrictions and next-action boundaries, then add narrowly scoped record-maintenance operations only when authorized and justified.
 
+**Reconciled pilot:** the initial repository candidate is intentionally narrower
+than this target architecture. It provides a local, client-owned stdio process
+with only `get_project_state()`, no model-supplied fields, an administratively
+configured project root, and a public-record-only resolver. It does not provide
+resources, remote hosting, catalog access, authorization decisions, or writes.
+
 MCP supplies the interface through which AI applications access resources and tools. The project defines the data semantics, permissions, updates and decision rules. MCP alone does not provide shared memory, establish authoritative facts or decide when a strategy may advance. [MCP architecture](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture).
 
 GitHub hosts the project repository and reviewed definitions. An MCP server is a separate running process on an approved operator machine or service. Repository hosting is not server deployment. A working local process is not proof of cross-machine integration.
@@ -235,11 +247,15 @@ Start with GitHub records and explicit document mappings. Catalog access is opti
 
 ### 4.3 Minimum interfaces
 
-These are proposed application-level names, not standard MCP methods. Implement with the official Python MCP SDK and validated input/output schemas. Expose equivalent read operations as resources where the selected clients support them. MCP defines resources for readable context and tools for callable operations. [Resources](https://modelcontextprotocol.io/specification/2026-07-28/server/resources), [tools](https://modelcontextprotocol.io/specification/2026-07-28/server/tools).
+These are proposed application-level names, not standard MCP methods. The
+implemented pilot is limited to the first row's zero-input form; the remaining
+interfaces and resource mappings remain deferred. Implement later interfaces with
+the official Python MCP SDK and validated input/output schemas. MCP defines
+resources for readable context and tools for callable operations. [Resources](https://modelcontextprotocol.io/specification/2026-07-28/server/resources), [tools](https://modelcontextprotocol.io/specification/2026-07-28/server/tools).
 
 | Interface | Input | Required output | First implementation |
 | --- | --- | --- | --- |
-| `get_project_state` | `project_id`, optional requested revision | Current work package, evidence/decision/authorization dimensions, owners, blockers, permitted next action, source versions and freshness | Read-only. |
+| `get_project_state` | Pilot: none; target: `project_id`, optional requested revision | Current work package, evidence/decision/authorization dimensions, owners, blockers, permitted next action, source versions and freshness | Pilot is read-only public briefing; target remains read-only. |
 | `get_campaign_handoff` | `campaign_id`, optional requested revision | Closeout, rationale, exact protocol/freeze/report references, attempt lineage, restrictions and unresolved items | Read-only. |
 | `get_evidence_reference` | Allowlisted `evidence_id` | Permitted locator, expected digest, evidence scope, access/verification status and last verified time | Metadata only by default; never arbitrary file reads. |
 | `check_next_action` | Known `action_id`, work-package ID, expected state revision | `permitted`, `not_authorized` or `unresolved`, with exact authority source, limits and unmet conditions | Read-only check; does not grant permission or execute the action. |
@@ -356,7 +372,11 @@ Passing these tests proves the stated capability. It does not prove live profita
 
 Place this file at `docs/PROJECT_CANONICAL.md` and link it from README as **Project definition, business goals and management/MCP specification**. Keep the original canonical problem specification linked as the economic authority. This file is the single designated operating specification; `PY_MYNYRA_PROJECT_BASELINE.md` remains superseded supporting history. Campaign protocols and freezes remain the authorities for their own facts. Owner approval in this review establishes the designation; repository publication must be recorded separately when it occurs.
 
-The initial adoption change should be limited to this document and navigation references. Do not rewrite frozen evidence, introduce executable server code, alter scientific gates or silently mark implementation work complete as part of publication.
+The initial adoption change was limited to this document and navigation references.
+The later reconciliation candidate introduces only the bounded public-state
+resolver and one-tool local adapter documented above. It does not rewrite frozen
+evidence, alter scientific gates, or silently mark the broader MCP program
+complete.
 
 The document custodian must be named in the adoption record. Update this specification when its objective interpretation, governance, interface contract or implementation decisions change. Keep volatile run status in the relevant work-package/campaign records; the baseline in Section 1.6 is explicitly dated. Increment the version for material changes, record the reason and approval reference, and preserve prior versions in Git.
 

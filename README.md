@@ -11,6 +11,10 @@ canonical problem specification.
 
 The [canonical problem specification](docs/03-Mynyra_Real_Problem_Specification_CANONICAL.md) governs Mynyra’s economic objective. The [project definition, business goals and management/MCP specification](docs/PROJECT_CANONICAL.md) is the approved operating design. It preserves the current Step 4 no-advancement decision and does not authorize a new campaign, sealed-data access, spending, broker operations or orders.
 
+The [execution roadmap baseline](docs/EXECUTION_ROADMAP_BASELINE.md) separates the
+program phases, repeatable work-package framework, capability tracks and evidence
+gates used to control movement from the current state toward the economic outcome.
+
 The first increments provide bounded, read-only cTrader checks plus a private,
 validated market-data preparation path:
 
@@ -50,6 +54,22 @@ sources. It does not run the new batch or unseal April.
 verification and a useful handoff. The [Step 2 catalog and benchmark](docs/PRAXIS_STEP2.md)
 and [Step 3 frozen-path proof](docs/PRAXIS_STEP3.md) track the current data-handling
 work under the [research sequence](docs/RESEARCH_EXPANSION_SEQUENCE.md).
+
+## Project briefing and local MCP pilot
+
+The reviewed public briefing index is
+[`docs/PROJECT_STATE.toml`](docs/PROJECT_STATE.toml). It summarizes selected,
+public-safe records and detects source-byte changes; it is not a live GitHub
+check, a complete history, or an authorization grant. See the
+[briefing workflow](docs/PROJECT_STATE_WORKFLOW.md) and
+[MCP pilot record](docs/PROJECT_STATE_MCP_PILOT.md).
+
+Run `mynyra-project-state --project-root .` to use the resolver without optional
+dependencies. Install `requirements-mcp.lock` and start `py-myn-mcp` with
+`MYNYRA_PROJECT_ROOT` set to the intended checkout for the optional local stdio
+adapter. It exposes only `get_project_state()`; it does not read private
+artifacts, access broker/provider systems, run a daemon, or authorize or execute
+project actions.
 
 ## Local setup
 
